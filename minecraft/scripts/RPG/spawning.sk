@@ -1,0 +1,33 @@
+command /spawner:
+	trigger:
+		give player a mob spawner with custom nbt "{MaxNearbyEntities:6s,RequiredPlayerRange:16s,SpawnCount:4s,SpawnData:{id:""minecraft:cow""},display:{Name:""Cow Spawner""},MaxSpawnDelay:800s,Delay:0s,x:-718,y:111,z:1110,id:""minecraft:mob_spawner"",SpawnRange:4s,MinSpawnDelay:200s,SpawnPotentials:[{Entity:{id:""minecraft:cow"",},Weight:1,CustomName:Spider,CustomNameVisable:200}]}"
+		
+command /debugnbt:
+	trigger:
+		set {_nbt} to nbt of player's targeted block
+		send "%{_nbt}%" to the console
+		set {_nbt} to "%{_nbt}%"
+		set {_nbt::*} to {_nbt} split at ","
+		send "&b-------------"
+		send "%{_nbt}%"
+		send "&b-------------"
+		send "&6-------------"
+		loop {_nbt::*}:
+			send "%loop-value%"
+		send "&6-------------"
+
+command /handnbt:
+	trigger:
+		send "%nbt of player's held item%"
+		send "%nbt of player's held item%" to the console
+		
+on place of mob spawner:
+	add "%nbt of player's held item%" to nbt of event-block
+	
+on spawner spawn:
+	set metadata value "Spawner" of event-entity to "true"
+	
+on spawn:
+	set {_halfwait} to "nuthin"
+	if "%metadata value ""Spawner"" of event-entity%" is not "true":
+		cancel event

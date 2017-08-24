@@ -1,0 +1,263 @@
+command /guild [<text>] [<text>] [<text>]:
+	trigger:
+		if arg 1 is set:
+			if arg 1 is "create":
+				if guild("%uuid of player%" , "get" , "none") is not set:
+					if arg 2 is set:
+						send guild("server" , "create" , "%arg 2%")
+						send guild("%uuid of player%" , "set" , "%arg 2%")
+						send guild("%uuid of player%" , "setrole" , "founder")
+						send warnMsg("Guild Created")
+					else:
+						send errorMsg("Please specify the name of the guild you want to create.")
+				else:
+					send errorMsg("You need to leave your current guild before you can create another.")
+				stop
+			if arg 1 is "leave":
+				if guild("%uuid of player%" , "role" , "none") is "founder":
+					send errorMsg("The founder cannot leave their union, you must transfer ownership to another member, or disband the Guild.")
+				else:
+					set {_guild} to guild("%uuid of player%" , "get" , "none")
+					guild("%uuid of player%" , "msg" , "&c%player% left the Guild")
+					guild("%uuid of player%" , "set" , "none")
+					stop
+			if arg 1 is "join":
+				if guild("server" , "status" , "%arg 2%") is "closed":
+					send errorMsg("%arg 2% is a closed Guild")
+					stop
+				if guild("server" , "status" , "%arg 2%") is "invite":
+					set {_invites} to guild("server" , "invites" , "%arg 2%")
+					if "%{_invites}%" contains "%player%":
+						send guild("%uuid of player%" , "set" , "%arg 2%")
+						send guild("%uuid of player%" , "setrole" , "guest")
+						guild("%uuid of player%" , "invite" , "delete")
+						guild("%uuid of player%" , "msg" , "&a%player% Joined the Guild")
+					else:
+						send errorMsg("You're not invited to %arg 2%")
+					stop
+				if guild("server" , "status" , "%arg 2%") is "open":
+					send guild("%uuid of player%" , "set" , "%arg 2%")
+					send guild("%uuid of player%" , "setrole" , "guest")
+					guild("%uuid of player%" , "invite" , "delete")
+					guild("%uuid of player%" , "msg" , "&a%player% Joined the Guild")
+					stop
+				send errorMsg("Invalid Guild")
+				stop
+			if arg 1 is "invites":
+				if arg 2 is set:
+					if arg 2 is "delete":
+						set {_guild} to guild("%uuid of player%" , "get" , "none")
+						guild("server" , "deleteinvites" , "%{_guild}%")
+						send warnMsg("Deleted all invites.")
+					else:
+						send errorMsg("the 2nd Argument is invalid")
+				else:
+					set {_guild} to guild("%uuid of player%" , "get" , "none")
+					set {_invited} to guild("server" , "invites" , "%{_guild}%")
+					send warnMsg("Invites from %{_guild}% are to: &f%{_invited}%")
+				stop
+			if arg 1 is "invite":
+				if arg 2 is set:
+					set {_guild} to guild("%uuid of player%" , "get" , "none")
+					if {_guild} is set:
+						if guild("%uuid of player%" , "role" , "none") is "officer" or "owner" or "founder":
+							set {_uuid} to getUUID("%arg 2%")
+							if guild("%{_uuid}%" , "get" , "none") is set:
+								send warnMsg("That player is already in a Guild")
+							else:
+								guild("%{_uuid}%" , "invite" , "%{_guild}%")
+								send warnMsg("Invite sent to &f%arg 2%")
+						else:
+							send errorMsg("Your guild hasn't given you permissions to invite people.")
+					else:
+						if arg 2 is "delete":
+							set {_deleteme} to ""
+#							if arg 3 is set:
+#								send errorMsg("Will add this soon, remove the 3rd argument to delete all invites")
+#							else:
+#								send guild("%uuid of player%" , "invite" , "delete")
+#								send errorMsg("Deleted all invites")
+						else:
+							send errorMsg("Invalid 2nd Argument")
+				else:
+					if guild("%uuid of player%") is set:
+						send errorMsg("You have no invites.")
+					else:
+						set {_invites} to guild("%uuid of player%" , "invite" , "get")
+						if {_invites} is set:
+							send warnMsg("You have invites from these Guilds: &f%{_invites}%")
+						else:
+							send errorMsg("You have no invites")
+				stop
+				
+			if arg 1 is "promote":
+				set {_guild} to guild("%uuid of player%" , "get" , "none")
+				if {_guild} is set:
+					if arg 2 is set:
+						set {_prank} to guild("%uuid of player%" , "role" , "none")
+						set {_uuid} to getUUID("%arg 2%")
+						if {_uuid} is set:
+							set {_rank} to guild("%{_uuid}%" , "role" , "none")
+							if {_rank} is set:
+								if "%{_rank}%" is "guest":
+									if "%{_prank}%" is "officer" or "founder":
+										guild("%{_uuid}%" , "setrole" , "member")
+									else:
+										send errorMsg("You arent high enough rank in your guild to Promote %arg 2%")
+								if "%{_rank}%" is "member":
+									if "%{_prank}%" is "founder":
+										guild("%{_uuid}%" , "setrole" , "officer")
+									else:
+										send errorMsg("You arent high enough rank in your guild to Promote %arg 2%")
+								if "%{_rank}%" is "officer":
+									if "%{_prank}%" is "founder":
+										guild("%{_uuid}%" , "setrole" , "founder")
+										guild("%uuid of player%" , "setrole" , "officer")
+										send warnMsg("You gave Guild Leadership to %arg 2%")
+									else:
+										send errorMsg("You arent high enough rank in your guild to Promote %arg 2%")
+							else:
+								send errorMsg("That player isn't in your guild.")
+						else:
+							send errorMsg("That player has never joined the server.")
+					else:
+						send errorMsg("Please specify the player you want to promote")
+				else:
+					chance of 1%:
+						send errorMsg("To promote your guildmates, you have to have some. Here's a smiley face to make you fell better :)")
+						stop
+					send errorMsg("You're not in a guild.")
+			
+			if arg 1 is "demote":
+				set {_guild} to guild("%uuid of player%" , "get" , "none")
+				if {_guild} is set:
+					if arg 2 is set:
+						set {_prank} to guild("%uuid of player%" , "role" , "none")
+						set {_uuid} to getUUID("%arg 2%")
+						if {_uuid} is set:
+							set {_rank} to guild("%{_uuid}%" , "role" , "none")
+							if {_rank} is set:
+								if "%{_rank}%" is "guest":
+									send errorMsg("You can't demote %arg 2% any further, did you mean to '/guild kick %arg 2%' them?")
+								if "%{_rank}%" is "member":
+									if "%{_prank}%" is "founder":
+										guild("%{_uuid}%" , "setrole" , "guest")
+									else:
+										send errorMsg("You arent high enough rank in your guild to Demote %arg 2%")
+								if "%{_rank}%" is "officer":
+									if "%{_prank}%" is "founder":
+										guild("%{_uuid}%" , "setrole" , "member")
+									else:
+										send errorMsg("You arent high enough rank in your guild to Demote %arg 2%")
+							else:
+								send errorMsg("That player isn't in your guild.")
+						else:
+							send errorMsg("That player has never joined the server.")
+					else:
+						send errorMsg("Please specify the player you want to demote")
+				else:
+					send errorMsg("You're not in a guild.")
+					
+			if arg 1 is "kick":
+				set {_guild} to guild("%uuid of player%" , "get" , "none")
+				if {_guild} is set:
+					if arg 2 is set:
+						set {_prank} to guild("%uuid of player%" , "role" , "none")
+						set {_uuid} to getUUID("%arg 2%")
+						if {_uuid} is set:
+							set {_rank} to guild("%{_uuid}%" , "role" , "none")
+							if {_rank} is set:
+								if "%{_rank}%" is "guest" or "member":
+									if "%{_prank}%" is "founder" or "officer":
+										guild("%uuid of player%" , "msg" , "&4%player% kicked %arg 2% from the guild.")
+										guild("%{_uuid}%" , "set" , "none")
+									else:
+										send errorMsg("You arent high enough rank in your guild to Kick %arg 2%")
+								if "%{_rank}%" is "officer":
+									if "%{_prank}%" is "founder":
+										guild("%uuid of player%" , "msg" , "&4%player% kicked %arg 2% from the guild.")
+										guild("%{_uuid}%" , "set" , "none")
+									else:
+										send errorMsg("You arent high enough rank in your guild to Kick %arg 2%")
+							else:
+								send errorMsg("That player isn't in your guild.")
+						else:
+							send errorMsg("That player has never joined the server.")
+					else:
+						send errorMsg("Please specify the player you want to demote")
+				else:
+					send errorMsg("You're not in a guild.")
+				
+			if arg 1 is "disband":
+				if {td.temp::disbandconfirm::%player%} is set:
+					guild("%uuid of player%" , "disband" , "none")
+					send errorMsg("Guild Disbanded.")
+					delete {td.temp::disbandconfirm::%player%}
+				else:
+					send errorMsg("Are you sure? confirm by typing the '/guild disband' once more within 10 seconds. Note: THIS CANNOT BE UNDONE")
+					set {td.temp::disbandconfirm::%player%} to now
+					wait 10 seconds
+					delete {td.temp::disbandconfirm::%player%}
+				stop
+				
+				
+			if arg 1 is "info":
+				set {_status} to guild("server" , "status" , "%arg 2%")
+				if {_status} is set:
+					set {_players} to guild("server" , "getallplayers" , "%arg 2%")
+					set {_players::*} to stringtolist("%{_players}%")
+					set {_ofounder} to guild("server" , "getonlinefounders" , "%arg 2%")
+					set {_ffounder} to guild("server" , "getofflinefounders" , "%arg 2%")
+					set {_oofficer} to guild("server" , "getonlineofficers" , "%arg 2%")
+					set {_fofficer} to guild("server" , "getofflineofficers" , "%arg 2%")
+					set {_omember} to guild("server" , "getonlinemembers" , "%arg 2%")
+					set {_fmember} to guild("server" , "getofflinemembers" , "%arg 2%")
+					set {_oguest} to guild("server" , "getonlineguests" , "%arg 2%")
+					set {_fguest} to guild("server" , "getofflineguests" , "%arg 2%")
+					send "&7-----------------[&6Guild Info&f %{_size}%&7]&7-----------------"
+					send "&7Information about that guild: &f%arg 2%"
+					send "&fGuild Rank: %{_rank}%"
+					send "&fLevel: &7<not implemented>"
+					send "&fAverage Karma: &7<not implemented>"
+					send "&fStatus: &f%{_status}%"
+					send "&fPlayers: &7(&f%size of {_players::*}%&7/&f%{_maxplayers}%)"
+					send "  &fFounder:"
+					if {_ofounder} is not "<none>":
+						send "   * &a%{_ofounder}%"
+					if {_ffounder} is not "<none>":
+						send "   * &7%{_ffounder}%"
+					send "  &fOfficers: &7(%size of {_officers::*}%)"
+					if {_oofficer} is not "<none>":
+						send "   * &a%{_oofficer}%"
+					if {_fofficer} is not "<none>":
+						send "   * &7%{_fofficer}%"
+					send "  &fMembers: &7(%size of {_members::*}%)"
+					if {_omember} is not "<none>":
+						send "   * &a%{_omember}%"
+					if {_fmember} is not "<none>":
+						send "   * &7%{_fmember}%"
+					send "  &fGuests:   &7(%size of {_guests::*}%)"
+					if {_oguest} is not "<none>":
+						send "   * &a%{_oguest}%"
+					if {_fguest} is not "<none>":
+						send "   * &7%{_fguest}%"
+					send "&7-------------------------[&6*&7]&7-------------------------"
+				else:
+					send errorMsg("That Union dosen't exist")
+				stop
+				
+			#/guild <player> command
+			set {_puuid} to getUUID("%arg 1%")
+			if {_puuid} is not set:
+				send errorMsg("That player has never joined the Forge before")
+				stop
+			set {_guild} to guild("%{_puuid}%" , "get" , "none")
+			if {_guild} is not set:
+				send errorMsg("%arg 1% is not in a guild")
+				stop
+			set {_guildrank} to guild("%{_puuid}%" , "role")
+			send warnMsg("%arg 1% is a &f%{_guildrank}% &7of &f%{_guild}%")
+		else:
+			set {_guild} to guild("%uuid of player%" , "get" , "none")
+			set {_guildrank} to guild("%uuid of player%" , "role")
+			send warnMsg("You are a &f%{_guildrank}% &7of &f%{_guild}%")

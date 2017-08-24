@@ -1,0 +1,18 @@
+#function health(uuid: text , action: text = "get" , modifier: text = "") :: text:
+#	if {_action} is "get":
+#		return {pd.playerdata::%{_uuid}%::stats::health}
+#	if {_action} is "add":
+#	if {_action} ir "remove":
+
+#function stamina(uuid: text , action: text = "get" , modifier: text = "") :: text:
+#	if {_action} is "get":
+#		return {pd.playerdata::%{_uuid}%::stats::stamina}
+#	if {_action} is "add":
+#	if {_action} ir "remove":
+	
+#function updateHealth(uuid: text):
+#	health("%{_uuid}%")
+	
+command /nbt [<text>]:
+	trigger:
+		send "%nbt of player%"

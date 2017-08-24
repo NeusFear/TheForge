@@ -1,0 +1,245 @@
+
+function karma(uuid: text , action: text = "get" , mod: text = "none") :: text:
+	if {pd.playerdata::%{_uuid}%::karma} is not set:
+		set {pd.playerdata::%{_uuid}%::karma} to 0
+	if {_action} is "get":
+		return "%{pd.playerdata::%{_uuid}%::karma}%"
+	if {_action} is "add":
+		set {pd.playerdata::%{_uuid}%::karma} to "%{pd.playerdata::%{_uuid}%::karma}%" parsed as integer
+		set {_mod} to "%{_mod}%" parsed as integer
+		add {_mod} to {pd.playerdata::%{_uuid}%::karma}
+	if {_action} is "remove":
+		set {pd.playerdata::%{_uuid}%::karma} to "%{pd.playerdata::%{_uuid}%::karma}%" parsed as integer
+		set {_mod} to "%{_mod}%" parsed as integer
+		remove {_mod} from {pd.playerdata::%{_uuid}%::karma}
+	
+function calculatexp(level: integer) :: text:
+	set {_0} to {_level} + 1
+	set {_1} to {_0} ^ 3
+	set {_2} to {_1}
+	return "%{_2}%"
+
+function levelup(p: player):
+	set {_uuid} to getUUID("%{_p}%")
+	set {_level} to {pd.playerdata::%{_uuid}%::level::level}
+	play sound UI_TOAST_CHALLENGE_COMPLETE to {_p} with volume 1 and pitch 1
+	set {_p} to {_p} parsed as player
+	title({_p} , "&7[&6Level Up&7]" , "&8You've Progressed to level: &f%{_level}%" , 60 , 10 , 10)
+	
+function level(uuid: text , action: text = "get" , mod: text = "none") :: text:
+	if {pd.playerdata::%{_uuid}%::level::xp} is not set:
+		set {pd.playerdata::%{_uuid}%::level::xp} to 0
+		set {pd.playerdata::%{_uuid}%::level::level} to 0
+	if {_action} is "get":
+		if {_mod} is "level":
+			return "%{pd.playerdata::%{_uuid}%::level::level}%"
+		if {_mod} is "xp":
+			return "%{pd.playerdata::%{_uuid}%::level::xp}%"
+		if {_mod} is "requiredxp":
+			return calculatexp({pd.playerdata::%{_uuid}%::level::level})
+	if {_action} is "addxp":
+		set {_mod} to {_mod} parsed as integer
+		add {_mod} to {pd.playerdata::%{_uuid}%::level::xp}
+		set {pd.playerdata::%{_uuid}%::level::level} to {pd.playerdata::%{_uuid}%::level::level} parsed as integer
+		set {_req} to calculatexp({pd.playerdata::%{_uuid}%::level::level})
+		set {_req} to {_req} parsed as integer
+		set {pd.playerdata::%{_uuid}%::level::xp} to {pd.playerdata::%{_uuid}%::level::xp} parsed as integer
+		if {pd.playerdata::%{_uuid}%::level::xp} < {_req}:
+			stop
+		while {pd.playerdata::%{_uuid}%::level::xp} >= {_req}:
+			subtract {_req} from {pd.playerdata::%{_uuid}%::level::xp}
+			add 1 to {pd.playerdata::%{_uuid}%::level::level}
+		set {_player} to getPlayer("%{_uuid}%")
+		set {_player} to {_player} parsed as player
+		levelup({_player})
+			
+	
+	
+function guild(uuid: text , action: text = "get" , mod: text = "none") :: text:
+	if {_uuid} is "server":
+		if {_action} is "create":
+			set {gd.guilds::%{_mod}%} to convert date now to unix
+			set {gd.guilds::%{_mod}%::status} to "invite"
+		if {_action} is "invites":
+			if {_mod} is set:
+				loop {gd.guilds::%{_mod}%::invites::*}:
+					set {_player} to getPlayer("%loop-value%")
+					if {_list} is set:
+						set {_list} to "%{_list}%, %{_player}%"
+					else:
+						set {_list} to "%{_player}%"
+				return {_list}
+			else:
+				return errorMsg("The guild isn't specified")
+		if {_action} is "getallplayers":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getonlineplayers":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {_player} parsed as player is online:
+					add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getofflineplayers":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {_player} parsed as player is online:
+					set {_n} to ""
+				else:
+					add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getfounders":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {gd.guilds::%{_mod}%::members::%loop-index%} is "founder":
+					add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getonlinefounders":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {_player} parsed as player is online:
+					if {gd.guilds::%{_mod}%::members::%loop-index%} is "founder":
+						add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getofflinefounders":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {_player} parsed as player is online:
+					set {_n} to ""
+				else:
+					if {gd.guilds::%{_mod}%::members::%loop-index%} is "founder":
+						add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getofficers":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {gd.guilds::%{_mod}%::members::%loop-index%} is "officer":
+					add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getonlineofficers":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {_player} parsed as player is online:
+					if {gd.guilds::%{_mod}%::members::%loop-index%} is "officer":
+						add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getofflineofficers":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {_player} parsed as player is online:
+					if {gd.guilds::%{_mod}%::members::%loop-index%} is "officer":
+						add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getmember":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {gd.guilds::%{_mod}%::members::%loop-index%} is "member":
+					add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getonlinemembers":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {_player} parsed as player is online:
+					if {gd.guilds::%{_mod}%::members::%loop-index%} is "member":
+						add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getofflinemembers":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {_player} parsed as player is online:
+					set {_n} to ""
+				else:
+					if {gd.guilds::%{_mod}%::members::%loop-index%} is "member":
+						add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getguests":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {gd.guilds::%{_mod}%::members::%loop-index%} is "guest":
+					add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getonlineguests":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {_player} parsed as player is online:
+					if {gd.guilds::%{_mod}%::members::%loop-index%} is "guest":
+						add {_player} to {_players::*}
+			return "%{_players::*}%"
+		if {_action} is "getofflineguests":
+			loop {gd.guilds::%{_mod}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				if {_player} parsed as player is online:
+					set {_n} to ""
+				else:
+					if {gd.guilds::%{_mod}%::members::%loop-index%} is "guest":
+						add {_player} to {_players::*}
+			return "%{_players::*}%"
+			
+		if {_action} is "deleteinvites":
+			loop {gd.guilds::%{_mod}%::invites::*}:
+				remove {_mod} from {pd.playerdata::%loop-value%::guild::invites::*}
+			delete {gd.guilds::%{_mod}%::invites::*}
+		if {_action} is "status":
+			return {gd.guilds::%{_mod}%::status}
+		if {_action} is "setstatusinvite":
+			set {gd.guilds::%{_mod}%::status} to "invite"
+		if {_action} is "setstatusopen":
+			set {gd.guilds::%{_mod}%::status} to "open"
+		if {_action} is "setstatusclosed":
+			set {gd.guilds::%{_mod}%::status} to "closed"
+	else:
+		if {_action} is "get":
+			return {pd.playerdata::%{_uuid}%::guild}
+		if {_action} is "set":
+			if {_mod} is "none":
+				if "%{gd.guilds::%{pd.playerdata::%{_uuid}%::guild}%::founder}%" is "%{_uuid}%":
+					set {_nothing} to ""
+				delete {gd.guilds::%{pd.playerdata::%{_uuid}%::guild}%::members::%{_uuid}%}
+				delete {pd.playerdata::%{_uuid}%::guild}
+			else:
+				if {gd.guilds::%{_mod}%} is set:
+					set {pd.playerdata::%{_uuid}%::guild} to {_mod}
+					remove {_uuid} from {gd.guilds::%{_mod}%::invites::*}
+					delete {pd.playerdata::%{_uuid}%::guild::invites::*}
+				else:
+					return errorMsg("That guild dosen't exist")
+					stop
+				set {gd.guilds::%{_mod}%::members::%{_uuid}%} to "founder"
+		if {_action} is "role":
+			return {gd.guilds::%{pd.playerdata::%{_uuid}%::guild}%::members::%{_uuid}%}
+		if {_action} is "setrole":
+			if {_mod} is set:
+				set {gd.guilds::%{pd.playerdata::%{_uuid}%::guild}%::members::%{_uuid}%} to {_mod}
+			else:
+				return errorMsg("The rank wasn't specified")
+		if {_action} is "invite":
+			if {_mod} is "none" or "get":
+				return "%{pd.playerdata::%{_uuid}%::guild::invites::*}%"
+			else:
+				if {gd.guilds::%{_mod}%} is set:
+					add {_mod} to {pd.playerdata::%{_uuid}%::guild::invites::*}
+					add "%{_uuid}%" to {gd.guilds::%{_mod}%::invites::*}
+					set {_recipient} to getPlayer("%{_uuid}%")
+					set {_recipient} to "%{_recipient}%" parsed as player
+					send sucessMsg("you were invited to the guild %{_mod}%") to {_recipient}
+				else:
+					return errorMsg("That guild dosen't exist")
+					stop
+		if {_action} is "msg":
+			loop {gd.guilds::%{pd.playerdata::%{_uuid}%::guild}%::members::*}:
+				set {_player} to getPlayer("%loop-index%")
+				set {_player} to {_player} parsed as player
+				send "&a* &7«&2Guild&7» %{_mod}%" to {_player}
+		
+		if {_action} is "disband":
+			set {_guild} to {pd.playerdata::%{_uuid}%::guild}
+			loop {gd.guilds::%{_guild}%::members::*}:
+				delete {pd.playerdata::%loop-index%::guild}
+				set {_player} to getPlayer("%loop-index%")
+				set {_player} to {_player} parsed as player
+				send "&a* &7«&2Guild&7» &4Your Guild was disbanded." to {_player}
+			delete {gd.guilds::%{_guild}%::*}
+			delete {gd.guilds::%{_guild}%}
+	

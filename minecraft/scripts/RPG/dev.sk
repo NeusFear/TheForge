@@ -1,0 +1,35 @@
+command /projectyle:
+    trigger:
+        spawn an armor stand at player
+        play sound "ITEM_FIRECHARGE_USE" at location of {_proj}
+        set {_proj} to last spawned armor stand
+        add "{Invisible:1,Small:1}" to nbt of {_proj}
+        push {_proj} forwards at speed 2
+        push {_proj} upwards at speed .5
+        equip {_proj} with player's skull
+        loop 20 times:
+            play sound "BLOCK_FURNACE_FIRE_CRACKLE" at location of {_proj}
+            play spawner flames at {_proj} to the player
+            wait 2 ticks
+        kill {_proj}
+
+command /killallstands:
+    trigger:
+        loop all entities:
+            if loop-entity is armor stand:
+                kill loop-entity
+
+#types: 0=task 1=challenge 2=goal
+function advancement(players: players , title: text = "Title" , desc: text = "description" , icon: text = "minecraft:grass" , type: text = "task"):
+	set {_adv} to new play_client_advancements packet
+	set "chatcomponent" pjson 0 of {_adv} to packetJson({_title})
+	set "chatcomponent" pjson 1 of {_adv} to packetJson({_desc})
+	
+
+command /packet [<text>]:
+	trigger:
+		set {_types::*} to all packettypes
+		loop {_types::*}:
+			if "%loop-value%" contains "%arg 1%":
+				add "%loop-value%" to {_return::*}
+		send "%{_return::*}%"

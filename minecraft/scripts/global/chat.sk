@@ -1,0 +1,79 @@
+function chat(uuid: text , msg: text , discord: text = "main"):
+	set {_player} to getPlayer("%{_uuid}%")
+	set {_premsg::*} to {_msg} split at ""
+	if "%{_premsg::1}%" is "@":
+		delete {_premsg::1}
+		set {_premsg} to ""
+		loop {_premsg::*}:
+			set {_premsg} to "%{_premsg}%%loop-value%"
+	else:
+		set {_rank} to rank("%{_uuid}%" , "get" , "highest")
+		set {_prefix} to prefix("%{_rank}%")
+		if {_discord} is "main":
+			set {_server} to "&a• ||ttp: &f%{_player}% &7is online on server &fMain"
+		if {_discord} is "discord":
+			set {_server} to "&5• ||ttp: &f%{_player}% &7message sent from &5Discord"
+		set {_user} to "%{_prefix}%%{_player}%||ttp:&f%{_player}% is an %{_prefix}%"
+		set {_donated} to "&7 has donated &a$x&7 to &6The Forge"
+		set {_forums} to "&7 is &fVerified &7on the Forums"
+
+		set {_message} to "%{_server}%||%{_user}%%nl%%{_donated}%%nl%%{_forums}%||&7► &f%{_msg}%"
+		json("@a" , "%{_message}%")
+		
+function chat2(uuid: text , msg: text , discord: text = "main"):
+	set {_player} to getPlayer("%{_uuid}%")
+	set {_premsg::*} to {_msg} split at ""
+	if "%{_premsg::1}%" is "@":
+		delete {_premsg::1}
+		set {_premsg} to ""
+		loop {_premsg::*}:
+			set {_premsg} to "%{_premsg}%%loop-value%"
+		guild("%{_uuid}%" , "msg" , "%{_player}%&f►&7 %{_premsg}%")
+	else:
+		set {_rank} to rank("%{_uuid}%" , "get" , "highest")
+		set {_prefix} to prefix("%{_rank}%")
+		if {_discord} is "main":
+			set {_server} to "&a• ||ttp: &f%{_player}% &7is online on server &fMain"
+		if {_discord} is "discord":
+			set {_server} to "&5• ||ttp: &f%{_player}% &7message sent from &5Discord"
+		set {_xp} to level("%{_uuid}%" , "get" , "xp")
+		set {_req} to level("%{_uuid}%" , "get" , "requiredxp")
+		set {_level} to level("%{_uuid}%" , "get" , "level")
+		set {_level} to {_level} parsed as integer
+		if {_level} < 10:
+			set {_level} to "0%{_level}%"
+		set {_level} to "&7«&f%{_level}%&7»||ttp: &f%{_xp}%&7/&f%{_req}% &7XP until next level %nl% &7x0 &fXP Boost"
+		set {_user} to "%{_prefix}%%{_player}%||ttp:&f%{_player}% is an %{_prefix}%"
+		set {_donated} to "&7 has donated &a$x&7 to &6The Forge"
+		set {_forums} to "&7 is &fVerified &7on the Forums"
+		if guild("%{_uuid}%" , "get" , "none") is not set:
+			set {_guild} to ""
+		else:
+			set {_guild} to guild("%{_uuid}%" , "get" , "none")
+			set {_guildrank} to guild("%{_uuid}%" , "role")
+			set {_guild} to "&7 is a &f%{_guildrank}% &fof &f%{_guild}%"
+
+		set {_message} to "%{_server}%||%{_level}%||%{_user}%%nl%%{_donated}%%nl%%{_forums}%%nl%%{_guild}%||&7► &f%{_msg}%"
+		json("@a" , "%{_message}%")
+		
+		set {_prefix} to "%uncolored {_prefix}%"
+		set {_msg} to "%uncolored {_msg}%"
+		set {_level} to level("%{_uuid}%" , "get" , "level")
+		set {_level} to {_level} parsed as integer
+		if {_level} < 10:
+			set {_level} to "0%{_level}%"
+		make embed "msg"
+		set desc of embed "msg" to "«%{_level}%»%{_prefix}%%{_player}%► %{_msg}%"
+		if {_discord} is "main":
+			set color of embed "msg" to "GRAY"
+		if {_discord} is "discord":
+			set color of embed "msg" to "MAGENTA"
+		send embed "msg" to channel "343419389477126155" with "TheForge"
+		clear embed "msg"
+
+on chat:
+	cancel event
+	if server() is "rpg":
+		chat2("%uuid of player%" , "%colored message%")
+	else:
+		chat("%uuid of player%" , "%colored message%")

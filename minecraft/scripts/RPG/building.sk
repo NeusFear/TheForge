@@ -1,0 +1,134 @@
+on block form:
+	cancel event
+	
+on fade:
+	cancel event
+
+on rightclick on iron door or iron trapdoor:
+	if player is sneaking:
+		stop
+	if rank("%uuid of player%" , "is" , "builder") is "true":
+		cancel event
+		toggle clicked block
+		
+command /nightvision:
+	aliases: nv
+	trigger:
+		if player has night vision:
+			remove night vision from the player
+			send errorMsg("Night Vision Removed")
+		else:
+			apply night vision to the player for 999 days
+			send warnMsg("Night Vision Applied")
+		
+command /tree [<text>] [<text>]:
+	trigger:
+		set {_session} to new edit session in player's world with limit -1
+		set {_loc} to location of player's target block
+		if arg 1 is set:
+			if arg 1 is "swamp":
+				set {_id} to random integer from 1 to 12
+				paste schem "plugins/WorldEdit/trees/swamp%{_id}%" at {_loc} using {_session} ignoring air
+				send warnMsg("Placed &fSwamp&7 tree id: &f%{_id}%")
+			if arg 1 is "oak":
+				set {_id} to random integer from 1 to 20
+				paste schem "plugins/WorldEdit/trees/oak%{_id}%" at {_loc} using {_session} ignoring air
+				send warnMsg("Placed &fOak&7 tree id: &f%{_id}%")
+			if arg 1 is "grave" or "gravestone" or "headstone":
+				set {_loc} to location above player's target block
+				if arg 2 is set:
+					if arg 2 is "east" or "west":
+						set {_id} to random integer from 1 to 14
+						paste schem "plugins/WorldEdit/trees/grave%{_id}%" at {_loc} using {_session} ignoring air
+						send warnMsg("Placed &fGrave&7 id: &f%{_id}%")
+					if arg 2 is "north" or "south":
+						set {_id} to random integer from 15 to 28
+						paste schem "plugins/WorldEdit/trees/grave%{_id}%" at {_loc} using {_session} ignoring air
+						send warnMsg("Placed &fGrave&7 id: &f%{_id}%")
+				else:
+					set {_id} to random integer from 1 to 28
+					paste schem "plugins/WorldEdit/trees/grave%{_id}%" at {_loc} using {_session} ignoring air
+					send warnMsg("Placed &fGrave&7 id: &f%{_id}%")
+		else:
+			send warnMsg("Asset types include: Swamp, Oak, and Grave")
+			
+command /grass:
+	trigger:
+		loop blocks in radius 5 of player's target block:
+			if loop-block is air:
+				block below loop-block is grass
+				chance of 40%:
+					set block at location of loop-block to tall grass
+				
+command /path [<text>]:
+	trigger:
+		if arg 1 is set:
+			if arg 1 is "dirt":
+				make player execute command "//br sphere dirt,3:1,grass,grass"
+				make player execute command "//mask grass,3,3:1"
+			if arg 1 is "stone":
+				make player execute command "//br sphere stone,cobble,gravel,grass,grass"
+				make player execute command "//mask stone,cobble,grass,gravel"
+			if arg 1 is "mud":
+				make player execute command "//br sphere soulsand,208,3:2,grass"
+				make player execute command "//mask soulsand,208,3:2,grass"
+			if arg 1 is "goblin":
+				make player execute command "//br sphere 3:1,4,98:2,98:1,48,2,2,2"
+				make player execute command "//mask 3:1,4,98:2,98:1,48,2,"
+			if arg 1 is "burnt":
+				make player execute command "//br sphere soulsand,208,3:2,grass,173,252:15"
+				make player execute command "//mask soulsand,208,3:2,grass,173,252:15"
+			if arg 1 is "forrest":
+				make player execute command "//br sphere 208,grass,252:12"
+				make player execute command "//mask 208,grass,252:12"
+		else:
+			send warnMsg("Path types include: dirt, stone, mud, goblin, burnt, and forrest")
+		
+#command /bt [<text>] [<text>] [<text>]:
+#	trigger:
+#		if arg 1 is set:
+#		
+#			if arg 1 is "foliage" or "foliate":
+#				if arg 2 is set:
+#					set {_materials::*} to arg 3 split at ","
+#					loop {_materials::*}:
+#						set {_mat} to "%loop-value%"
+#						replace all "_" with " " in {_mat}
+#						if {_mat} is an item type:
+#							add {_mat} to {bt.brushes::%uuid of player%::meterials::*}
+#						else:
+#							delete {bt.brushes::%uuid of player%::meterials::*}
+#							send "%{_mat}% is not a valid block type"
+#							stop
+#						send "brush equipped, use a stick to use it"
+#				else:
+#					delete {bt.brushes::%uuid of player%::meterials::*}
+#					add "long grass" to {bt.brushes::%uuid of player%::meterials::*}
+#				if arg 3 is set:
+#					set {bt.brushes::%uuid of player%::chance} to "%arg 3%"
+#				else:
+#					set {bt.brushes::%uuid of player%::chance} to 50
+#				set {bt.brushes::%uuid of player%::brush} to "foliate"
+#				stop
+				
+				
+				
+#			send "that brush doesn't exist"
+#		else:
+#			send "brush info here"
+			
+#on rightclick holding stick:
+#	if {bt.brushes::%uuid of player%::brush} is set:
+#		if {bt.brushes::%uuid of player%::size} is not set:
+#			set {bt.brushes::%uuid of player%::size} to 3
+#		if {bt.brushes::%uuid of player%::brush} is "foliate":
+#			send "boop"
+#			loop blocks in radius {bt.brushes::%uuid of player%::size} of targeted block:
+#				loop-block is air
+#				block below loop-block is not air
+#				send "placing"
+#				chance of {bt.brushes::%uuid of player%::chance}:
+#					set block at location of loop-block to a random element out of {bt.brushes::%uuid of player%::meterials::*} parsed as item type
+#					send "grass"
+#	else:
+#		send "use '/bt' to setup your build tools brush"

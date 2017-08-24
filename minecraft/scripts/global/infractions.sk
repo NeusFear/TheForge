@@ -1,0 +1,90 @@
+command /inrfaction [<text>] [<text>] [<text>]:
+	aliases: inf , infractions
+	trigger:
+
+		if arg 1 is "add":
+			if rank("%uuid of player%" , "is" , "moderator") is "true":
+				set {_perm} to "true"
+			if rank("%uuid of player%" , "is" , "admin") is "true":
+				set {_perm} to "true"
+			if {_perm} is set:
+				if arg 2 is set:
+					if arg 3 is set:
+						if hasJoined("%arg 2%") is false:
+							send errorMsg("%arg 2% has never joined before.")
+							stop
+						if arg 3 is "disrespect" or "respect":
+							set {_type} to "disrespect"
+						if arg 3 is "ads" or "adverts" or "advertisements" or "advertising" or "advertisment":
+							set {_type} to "advertisement"
+						if arg 3 is "chat" or "spam" or "colors":
+							set {_type} to "chat"
+						if arg 3 is "mods" or "hacks" or "hacking" or "cheating" or "xray" or "fly" or "flying" or "modifications" or "modding":
+							set {_type} to "modding"
+						if arg 3 is "sensitivity" or "language" or "nudity" or "falic":
+							set {_type} to "sensitivity"
+						if arg 3 is "security" or "ddos":
+							set {_type} to "security"
+						if {_type} is set:
+							infractions("add" , "%arg 2%" , {_type} , "%player%")
+							send warnMsg("Infraction &f%{_type}% &7added to &f%arg 2%")
+							stop
+						else:
+							send errorMsg("&7%arg 3%&c is not a valid infraction type: the valid types are &7disrespect, advertisements, chat, modding, sensitivity, and security")
+							stop
+					else:
+						send errorMsg("Usage: &f/inf add <player> <type>")
+						stop
+				else:
+					send errorMsg("Usage: &f/inf add <player> <type>")
+					stop
+			else:
+				send errorMsg("You don't have permissions to modify Infractions.")
+				stop
+		if arg 1 is "remove" or "pardon":
+			if rank("%uuid of player%" , "is" , "moderator") is "true":
+				set {_perm} to "true"
+			if rank("%uuid of player%" , "is" , "admin") is "true":
+				set {_perm} to "true"
+			if {_perm} is set:
+				if arg 2 is set:
+					if arg 3 is set:
+						infractions("remove" , "%arg 2%" , "%arg 3%" , "%player%")
+						send warnMsg("Infraction &f%arg 3% &7removed from &f%arg 2%")
+						stop
+					else:
+						send errorMsg("Usage: &f/inf add <player> <infraction id>")
+						stop
+				else:
+					send errorMsg("Usage: &f/inf add <player> <infraction id>")
+					stop
+			else:
+				send errorMsg("You don't have permissions to modify Infractions.")
+				stop
+
+		if arg 1 is set:
+			if hasJoined("%arg 1%") is true:
+				send "&7----------------[&6The Forge Infractions&7]&7----------------"
+				send "&f%arg 1%&7's Infractions:"
+				infractions("get" , "%arg 1%" , "send" , "%player%" , "%player%")
+			else:
+				send errorMsg("That player has never joined before.")
+				stop
+		else:
+			send "&7----------------[&6The Forge Infractions&7]&7----------------"
+			send "&fYour&7 Infractions:"
+			infractions("get" , "%player%" , "send" , "%player%" , "%player%")
+		send "&7-------------------------[&6*&7]&7-------------------------"
+
+command /rules:
+	trigger:
+		send "&7-------------------[&6The Forge Rules&7]&7-------------------"
+		send "&8Failure to comply with the Rules, can result in an &7/infraction"
+		send "&7[&f1&7] Be Respectful"
+		send "&7[&f2&7] Don't Advertise other servers"
+		send "&7[&f3&7] Keep Chat organised, no spamming, or other annoyances"
+		send "&7[&f4&7] Don't use mods that give an advantage over other players"
+		send "&7[&f5&7] Be sensitive to others, keep it PG"
+		send "&7[&f6&7] Don't threaten the security of the community"
+		send "&8If you use Common sense, you won't have any issues here."
+		send "&7-------------------------[&6*&7]&7-------------------------"

@@ -1,0 +1,124 @@
+options:
+	guild: 231511965061742592
+	chatchannel: 343419389477126155
+	confirmchannel: 343420588322455552
+	logschannel: 343421639565901835
+
+	
+#{gd.general::discord::%uuid of player%::id}
+#{pd.playerdata::%uuid of player%::discord::status}
+#{gd.general::discordque::*}
+#{pd.playerdata::%{gd.general::discordque::%{_id}%}%::discord::user}
+	
+command /discord:
+	trigger:
+		if {gd.general::discord::%uuid of player%::id} is set:
+			send warnMsg("&7Your Discord ID is &f%{gd.general::discord::%uuid of player%::id}%&7 join it in the %nl%'&fjoin-your-account&7' channel on our %nl%Discord: &fhttps://discord.gg/Q9h68tS")
+		else:
+			if {pd.playerdata::%uuid of player%::discord::status} is "verified":
+				send warnMsg("Your account is already joined to user id: &f%{pd.playerdata::%uuid of player%::discord::user}%")
+			else:
+				set {_gen} to randomChar(10)
+				if {gd.general::discordque::%{_gen}%} is set:
+					set {_gen} to randomChar(10)
+				set {gd.general::discord::%uuid of player%::id} to {_gen}
+				set {gd.general::discordque::%{_gen}%} to "%uuid of player%"
+				send warnMsg("You havent got an ID yet, let us Generate one...")
+				send warnMsg("&7Your Discord ID is &f%{gd.general::discord::%uuid of player%::id}%&7 join it in the %nl%'&fjoin-your-account&7' channel on our %nl%Discord: &fhttps://discord.gg/Q9h68tS")
+
+on guild message receive seen by "TheForge":
+	set {_args::*} to event-string split at " "
+	if "%event-channel%" is "{@confirmchannel}":
+		set {_id} to {_args::1}
+		if {gd.general::discordque::%{_id}%} is set:
+			make embed "sucess"
+			set title of embed "sucess" to "Sucess!"
+			set color of embed "sucess" to "GREEN"
+			set footer of embed "sucess" to "The Forge Discord Bot: made with love by SkyForge"
+			add field "**Account Connected**", with value "Welcome to our discord %{gd.general::discordque::%{_id}%}%", split true to embed "sucess"
+			
+			set {pd.playerdata::%{gd.general::discordque::%{_id}%}%::discord::status} to "verified"
+			set {pd.playerdata::%{gd.general::discordque::%{_id}%}%::discord::user} to "%event-user%"
+			set {gd.general::discord::users::%event-user%} to "%{gd.general::discordque::%{_id}%}%"
+			give role "connected to minecraft" to user event-user in guild "{@guild}" with bot "TheForge"
+			set {_player} to getPlayer("%{gd.general::discordque::%{_id}%}%")
+#			set nickname of user event-user to "%{gd.general::discordque::%{_id}%}%" with "TheForge" in guild "231511965061742592"
+			delete {gd.general::discord::%{gd.general::discordque::%{_id}%}%::id}
+			delete {gd.general::discordque::%{_id}%}
+			
+			send embed "sucess" to channel event-channel with "TheForge"
+			clear embed "sucess"
+			send discord message of "Thanks for verifying your minecraft account on the Forge Discord! You now have access to our minecraft-chat Channel, and can talk between Discord and Minecraft" to user "%event-user%" with "TheForge"
+		else:
+			make embed "error"
+			set title of embed "error" to "Error"
+			set color of embed "error" to "RED"
+			set footer of embed "error" to "The Forge Discord Bot: made with love by SkyForge"
+			add field "**Invalid ID**", with value "make sure you typed the code exactly as it is shown in minecraft.", split true to embed "error"
+			send embed "error" to channel event-channel with "TheForge"
+			clear embed "error"
+	if "%event-channel%" is "{@chatchannel}":
+		if "%{_args::1}%" does not contain "!":
+			delete message event-message with bot "TheForge"
+			set {_uuid} to fromDiscord("%event-user%")
+			chat("%{_uuid}%" , "%event-string%" , "discord")
+	
+	if {_args::1} is "!online" or "!list":
+		if {_args::2} is "mc":
+			set {_players} to size of players
+			loop uuid of players:
+				set {_rank} to rank("%loop-value%")
+				set {_prefix} to prefix("%{_rank}%")
+				set {_prefix} to "%uncolored {_prefix}%"
+				remove {_rank} from {_ranks::*}
+				add {_rank} to {_ranks::*}
+				set {_player} to getPlayer("%loop-value%")
+				add "%{_player}%" to {_players::%{_rank}%::*}
+			
+			make embed "list"
+			set title of embed "list" to "Online Players: (%{_players}%)"
+			set color of embed "list" to "GREEN"
+			loop {_ranks::*}:
+				set {_prefix} to prefix("%loop-value%")
+				set {_prefix} to "%uncolored {_prefix}%"
+				add field "**%{_prefix}%: (%size of {_players::%loop-value%::*}%)**", with value "* %{_players::%loop-value%::*}%", split true to embed "list"
+			send embed "list" to channel event-channel with "TheForge"
+			clear embed "list"
+		
+on command:
+	if "%command%" contains "restart":
+		make embed "restart"
+		set color of embed "restart" to "RED"
+		set desc of embed "restart" to "Server Restarted"
+		set footer of embed "restart" to "%now%"
+		send embed "restart" to channel "{@chatchannel}" with "TheForge"
+	if "%full command%" contains "reload":
+		set {_uuid} to getUUID("%player%")
+		set {_rank} to rank("%{_uuid}%")
+		set {_prefix} to prefix("%{_rank}%")
+		set {_command} to "%full command%"
+		set {_command::*} to {_command} split at " "
+		make embed "reload"
+		set color of embed "reload" to "YELLOW"
+		set desc of embed "reload" to "%uncolored {_prefix}%%player% reloaded %{_command::3}%.sk"
+		send embed "reload" to channel "{@logschannel}" with "TheForge"
+		stop
+	if "%command%" does not contain "tellraw":
+		set {_uuid} to getUUID("%player%")
+		set {_rank} to rank("%{_uuid}%")
+		set {_prefix} to prefix("%{_rank}%")
+		make embed "command"
+		set color of embed "command" to "GRAY"
+		set desc of embed "command" to "%uncolored {_prefix}%%player% /%full command%"
+		send embed "command" to channel "{@logschannel}" with "TheForge"
+		
+	
+on skript stop:
+	make embed "stop"
+	set color of embed "stop" to "RED"
+	set desc of embed "stop" to "Server Stopped"
+	set footer of embed "stop" to "%now%"
+	send embed "stop" to channel "{@chatchannel}" with "TheForge"
+		
+#on guild member join seen by "TheForge":
+#	send discord message of "Thanks for joining TheForge official Discord Channel! You currently don't have access to the discord chat channels, all you have to do is go into our join-your-account and type in the ID you get igname with /discord" to user "%event-user%" with "TheForge"

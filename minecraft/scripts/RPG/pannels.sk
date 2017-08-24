@@ -1,0 +1,42 @@
+command /pannel [<text>] [<text>] [<text>] [<text>] [<text>] [<text>]:
+	aliases: admin, mod
+	trigger:
+		if rank("%uuid of player%" , "get" , "staff") is not "none":
+			if arg 1 is not set:
+				make player execute "/pannel list"
+
+
+			if arg 1 is "list" or "help":
+				send "&7-----&8[&6The Forge Pannels&8]&7------------"
+				send "&7You have acess to the following &fPannels"
+				if rank("%uuid of player%" , "is" , "admin") is "true":
+					set {_pref} to prefix("admin")
+					send "%{_pref}% &f- &7The main pannel for admins"
+				if rank("%uuid of player%" , "is" , "developer") is "true":
+					set {_pref} to prefix("developer")
+					send "%{_pref}% &f- &7Hold Developer useful commands"
+				if rank("%uuid of player%" , "is" , "moderator") is "true":
+					set {_pref} to prefix("moderator")
+					send "%{_pref}% &f- &7The main pannel for moderators"
+				if rank("%uuid of player%" , "is" , "builder") is "true":
+					set {_pref} to prefix("builder")
+					send "%{_pref}% &f- &7Builder Related Commands"
+				send "&7-----&8[&6The Forge Pannels&8]&7------------"
+
+
+			if arg 1 is "admin":
+				if arg 2 is "help":
+					send "help"
+				if arg 2 is "addrank":
+					if arg 3 is set:
+						if arg 4 is "admin" or "developer" or "moderator" or "builder" or "legend" or "royal" or "paladain" or "hero" or "noble" or "member":
+							set {_player} to arg 3 parsed as player
+							set {_uuid} to uuid of {_player}
+							rank("%{_uuid}%" , "add" , "%arg 4%")
+							send sucessMsg("added %arg 4% to %arg 3%'s ranks")
+						else:
+							send errorMsg("the rank %arg 4% dosen't exist")
+					else:
+						errorMsg("please specify the player you want to modify")
+		else:
+			errorMsg("this is a staff only command")

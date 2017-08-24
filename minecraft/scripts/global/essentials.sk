@@ -1,0 +1,259 @@
+command /ping:
+	trigger:
+		send warnMsg("Your ping is: &f%player's ping%")
+
+command /plugins:
+	trigger:
+		set {_var::*} to directory "plugins/Skript/scripts/"'s files
+		set {_size} to "%size of {_var::*}%"
+		loop {_var::*}:
+			set {_current} to loop-value
+			set {_current::*} to {_current} split at "\"
+			set {_size} to size of {_current::*}
+			set {_current} to {_current::%{_size}%}
+			replace all ".sk" with "" in {_current}
+			add {_current} to {_plugins::*}
+		send "&7-----------------[&6The Forge Plugins&7]&7-----------------"
+		send "&fPlugins (%{_size}%): &7%{_plugins::*}%"
+		send "&7-------------------------[&6*&7]&7-------------------------"
+
+on server list ping:
+	set {_ip} to method "getAddress"
+	set {_ip} to "%{_ip}%"
+	replace all "/" with "" in {_ip}
+	set motd to "&7[&6The Forge&7]%nl%&71.12.1"
+		
+on packet event status_server_server_info:
+	put json "ServerPing" pjson 0 of event-packet in listvar {_l::*}
+	delete {_l::players::sample::*}
+	set {_l::players::sample::1::id} to new uuid
+	set {_l::players::sample::1::name} to "&7[&6The Forge&7]"
+	set "ServerPing" pjson 0 of event-packet to json of listvar {_l::*}
+
+on join:
+	pTab("&8--=+ &7[&6The Forge&7]&8 +=--" , "&8------=+ &7[&6*&7]&8 +=------" , player)
+	set {_rank} to rank("%uuid of player%" , "get" , "highest")
+	set {_prefix} to prefix("%{_rank}%")
+	set player's tab name to "%{_prefix}%%player%"
+		
+function addPlaytime(uuid: text):
+	set {_thus} to {td.temp::playtime::%{_uuid}%}
+	set {_now} to convert date now to unix
+	set {_total} to {_now} - {_thus}
+	
+	set {_total} to {_total} parsed as integer
+	set {pd.playerdata::%{_uuid}%::playtime} to {pd.playerdata::%{_uuid}%::playtime} parsed as integer
+	add {_total} to {pd.playerdata::%{_uuid}%::playtime}
+	set {td.temp::playtime::%{_uuid}%} to convert date now to unix
+	
+	
+on join:
+	set {td.temp::playtime::%uuid of player%} to convert date now to unix
+on quit:
+	addPlaytime("%uuid of player%")
+	delete {td.temp::playtime::%uuid of player%}
+
+command /playtime [<text>]:
+	trigger:
+		if arg 1 is set:
+			if hasJoined("%arg 1%") is true:
+				set {_uuid} to getUUID("%arg 1%")
+				addPlaytime("%{_uuid}%")
+				set {_current} to "%{pd.playerdata::%{_uuid}%::playtime}%" parsed as integer
+				set {_time} to timespan({_current})
+				send "&7[&6The Forge Statistics&7] &f%arg 1%&7 has played %{_time}%"
+			else:
+				send errorMsg("%arg 1% has never joined before")
+		else:
+			set {_uuid} to getUUID("%player%")
+			addPlaytime("%{_uuid}%")
+			set {_current} to "%{pd.playerdata::%{_uuid}%::playtime}%" parsed as integer
+			set {_time} to timespan({_current})
+			send "&7[&6The Forge Statistics&7] &fYou&7 have played %{_time}%"
+		
+command /pl:
+	trigger:
+		make player execute command "/plugins"
+		
+command /whitelist [<text>] [<text>]:
+	trigger:
+#		if arg 1 is "sort":
+#			loop {cd.whitelist::white::perm::*}:
+#				if {_list} does not contain "%loop-value%":
+#					set {_list} to "%{_list}%,%loop-value%"
+#				else:
+#					remove loop-value from {cd.whitelist::white::perm::*}
+#			stop
+		if arg 1 is not set:
+			if {cd.whitelist} is true:
+				send warnMsg("Whitelist is currently &2ON")
+			else:
+				send warnMsg("Whitelist is currently &4OFF")
+		else if arg 1 is "on":
+			if rank("%uuid of player%" , "is" , "admin") is "true":
+				if {cd.whitelist} is true:
+					send sucessMsg("Whitelist is currently &2ON")
+				else:
+					send sucessMsg("Whitelist set to &2ON")
+					set {cd.whitelist} to true
+			else:
+				send errorMsg("you dont have permission to toggle whitelist")
+		else if arg 1 is "off":
+			if rank("%uuid of player%" , "is" , "admin") is "true":
+				if {cd.whitelist} is true:
+					send sucessMsg("Whitelist is currently &4OFF")
+				else:
+					send sucessMsg("Whitelist set to &4OFF")
+					delete {cd.whitelist}
+			else:
+				send errorMsg("you dont have permission to toggle whitelist")
+		else if arg 1 is "toggle":
+			if rank("%uuid of player%" , "is" , "admin") is "true":
+				if {cd.whitelist} is true:
+					send sucessMsg("Whitelist set to &4OFF")
+				else:
+					send sucessMsg("Whitelist set to &2ON")
+					set {cd.whitelist} to true
+			else:
+				send errorMsg("you dont have permission to toggle whitelist")
+		else if arg 1 is "list":
+			if rank("%uuid of player%" , "is" , "admin") is "true":
+				if arg 2 is "white":
+					loop {cd.whitelist::white::perm::*}:
+						set {_player} to getPlayer("%loop-value%")
+						add {_player} to {_list::*}
+					loop {cd.whitelist::white::temp::*}:
+						add "%loop-value%" to {_list::*}
+					send warnMsg("Whitelisted Players: &8%{_list::*}%")
+				if arg 2 is "gray":
+					loop {cd.whitelist::gray::perm::*}:
+						set {_player} to getPlayer("%loop-value%")
+						add {_player} to {_list::*}
+					loop {cd.whitelist::gray::temp::*}:
+						add "%loop-value%" to {_list::*}
+					send warnMsg("Graylisted Players: &8%{_list::*}%")
+				if arg 2 is not set:
+					send errorMsg("Please specify the whitelist type, white or gray")
+			else:
+				send errorMsg("You can't view the whitelist")
+		else:
+			if rank("%uuid of player%" , "is" , "admin") is "true":
+				set {_pass} to true
+			if command sender is console:
+				set {_pass} to true
+			if {_pass} is true:
+				if arg 2 is not set:
+					send sucessMsg("added %arg 1% to the whitelist")
+					add arg 1 to {cd.whitelist::white::temp::*}
+				else if arg 2 is "gray":
+					send sucessMsg("added %arg 1% to the graylist")
+					add arg 1 to {cd.whitelist::gray::temp::*}
+				else if arg 2 is "remove":
+					remove arg 1 from {cd.whitelist::gray::temp::*}
+					remove arg 1 from {cd.whitelist::white::temp::*}
+					set {_uuid} to getUUID(arg 1)
+					remove {_uuid} from {cd.whitelist::gray::perm::*}
+					remove {_uuid} from {cd.whitelist::white::perm::*}
+					send sucessMsg("removed %arg 1% from the graylist and whitelist")
+				else:
+					send errorMsg("there is no such thing as and %arg 2%list")
+			else:
+				send errorMsg("you dont have permission to whitelist players")
+
+command /serverstats:
+	trigger:
+		if rank("%uuid of player%" , "is" , "moderator" , "+") is "true":
+			send "&7-----------------[&6The Forge Statistics&7]&7-----------------"
+			send "&7Free RAM: &f%free ram%M&7/&f%max ram%M"
+			send "&7-------------------------[&6*&7]&7-------------------------"
+		else:
+			send errorMsg("All you need to see performance is &f/tps")
+		
+command /killall:
+	trigger:
+		if rank("%uuid of player%" , "is" , "moderator" , "+") is "true":
+			loop all entities:
+				loop-entity is not a player
+				kill loop-entity
+			send errorMsg("killed all entities")
+		else:
+			send errorMsg("That command is to dangerous for someone of your strength")
+		
+command /speed [<number>]:
+	trigger:
+		if rank("%uuid of player%" , "is" , "builder" , "+") is "true":
+			if player is flying:
+				set player's fly speed to 0.1
+				if arg 1 is set:
+					set {_speed} to the player's fly speed * arg 1
+					set player's fly speed to {_speed}
+					send warnMsg("Set your fly speed to &f%arg 1%")
+				else:
+					send warnMsg("Reset your fly speed to &f1")
+			else:
+				set player's walk speed to 0.2
+				if arg 1 is set:
+					set {_speed} to player's walk speed * arg 1
+					set player's walk speed to {_speed}
+					send warnMsg("Set your walk speed to &f%arg 1%")
+				else:
+					send warnMsg("Reset your walk speed to &f1")
+		else:
+			errorMsg("You can't change your speed.")
+		
+command /list:
+	aliases: online
+	trigger:
+		send "&7-----------------[&6The Forge Players&7]&7-----------------"
+		loop uuid of players:
+			set {_rank} to rank("%loop-value%")
+			remove {_rank} from {_ranks::*}
+			add {_rank} to {_ranks::*}
+			set {_player} to getPlayer("%loop-value%")
+			add "&f%{_player}%&7" to {_players::%{_rank}%::*}
+		loop {_ranks::*}:
+			set {_prefix} to prefix("%loop-value%")
+			send "%{_prefix}% &7(%size of {_players::%loop-value%::*}%):"
+			send "%{_players::%loop-value%::*}%"
+		send "&7-------------------------[&6*&7]&7-------------------------"
+		
+command /setwarp [<text>]:
+	trigger:
+		if rank("%uuid of player%" , "is" , "admin") is "true":
+			if arg 1 is set:
+				set {id.warps::%arg 1%} to location of player
+				send sucessMsg("%arg 1% set to your location")
+			else:
+				send errorMsg("Please specify the name of the warp you want to set")
+		else:
+			errorMsg("You can't create warps.")
+command /delwarp [<text>]:
+	trigger:
+		if rank("%uuid of player%" , "is" , "admin") is "true":
+			if arg 1 is set:
+				if {id.warps::%arg 1%} is set:
+					delete {id.warps::%arg 1%}
+					send sucessMsg("%arg 1% removed")
+				else:
+					send errorMsg("That warp dosen't exist")
+			else:
+				send errorMsg("Please specify the warp you want to delete")
+		else:
+			errorMsg("You can't create warps.")
+command /warps:
+	trigger:
+		set {_size} to "%size of {id.warps::*}%"
+		send "&7-----------------[&6The Forge Warps&f %{_size}%&7]&7-----------------"
+		loop {id.warps::*}:
+			send "&6*&7 %loop-index%"
+		send "&7-------------------------[&6*&7]&7-------------------------"
+command /warp [<text>]:
+	trigger:
+		if arg 1 is set:
+			if {id.warps::%arg 1%} is set:
+				teleport player to {id.warps::%arg 1%}
+				send sucessMsg("Teleporting to %arg 1%...")
+			else:
+				send errorMsg("The warp %arg 1% doesn't exist")
+		else:
+			send errorMsg("Please specify the warp you want to teleport to. A list can be found with &f/warps")

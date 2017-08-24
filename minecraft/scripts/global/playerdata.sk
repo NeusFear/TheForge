@@ -1,0 +1,92 @@
+on join:
+	set join message to ""
+	playerJoin(player)
+	if "%{td.leave}%" is "%player%":
+		delete {td.leave}
+on quit:
+	if "%{td.leave}%" is not "%player%":
+		set leave message to ""
+		playerLeave(player)
+		set {td.leave} to "%player%"
+	
+command /rank [<text>] [<text>] [<text>]:
+	aliases: ranks
+	trigger:
+		if arg 1 is set:
+			if arg 1 is "add":
+				if rank("%uuid of player%" , "is" , "admin") is "true":
+					set {_pass} to true
+				if command sender is console:
+					set {_pass} to true
+				if {_pass} is true:
+					if arg 2 is set:
+						set {_uuid} to getUUID("%arg 2%")
+						if {_uuid} is set:
+							if arg 3 is set:
+								set {_prefix} to prefix("%arg 3%")
+								if {_prefix} is set:
+									rank("%{_uuid}%" , "add" , "%arg 3%")
+									send sucessMsg("Added %{_prefix}% &ato &f%arg 2%&a's Ranks")
+									set {_player} to "%arg 2%" parsed as player
+									send warnMsg("Your ranks were updated to include %{_prefix}% &7by &f%player%") to {_player}
+									set {_highest} to rank("%{_uuid}%")
+									set {_prefix} to prefix("%{_highest}%")
+									set {_player}'s tab name to "%{_prefix}%%arg 2%"
+								else:
+									send errorMsg("%arg 3% is not a valid rank name")
+							else:
+								send errorMsg("Please specify the rank you want to add to %arg 2%")
+						else:
+							send errorMsg("%arg 2% has never joined the server before.")
+					else:
+						send errorMsg("Please specify the player you want to modify")
+				else:
+					send errorMsg("You don't have permission to add ranks")
+					
+					
+			else if arg 1 is "remove":
+				if rank("%uuid of player%" , "is" , "admin") is "true":
+					if arg 2 is set:
+						set {_uuid} to getUUID("%arg 2%")
+						if {_uuid} is set:
+							if arg 3 is set:
+								set {_prefix} to prefix("%arg 3%")
+								if {_prefix} is set:
+									rank("%{_uuid}%" , "remove" , "%arg 3%")
+									send errorMsg("Removed %{_prefix}% &cfrom &f%arg 2%&c's Ranks")
+									set {_player} to "%arg 2%" parsed as player
+									send warnMsg("Your ranks were updated to no longer include   %{_prefix}% &7by &f%player%") to {_player}
+									set {_highest} to rank("%{_uuid}%")
+									set {_prefix} to prefix("%{_highest}%")
+									set {_player}'s tab name to "%{_prefix}%%arg 2%"
+								else:
+									send errorMsg("%arg 3% is not a valid rank name")
+							else:
+								send errorMsg("Please specify the rank you want to remove from %arg 2%")
+						else:
+							send errorMsg("%arg 2% has never joined the server before.")
+					else:
+						send errorMsg("Please specify the player you want to modify")
+				else:
+					send errorMsg("You don't have permission to remove ranks to %arg 2%")
+					
+					
+			else if arg 1 is "list":
+				if arg 2 is set:
+					set {_uuid} to getUUID("%arg 2%")
+					if {_uuid} is set:
+						set {_ranks::*} to rank("%uuid of player%" , "get" , "all")
+						send warnMsg("Your ranks are: &8%{_ranks::*}%")
+					else:
+						send errorMsg("%arg 2% has never joined the server before.")
+				else:
+					set {_ranks::*} to rank("%uuid of player%" , "get" , "all")
+					send warnMsg("Your ranks are: &8%{_ranks::*}%")
+			else:
+				set {_uuid} to getUUID("%arg 1%")
+				set {_ranks} to rank("%{_uuid}%")
+				send warnMsg("%arg 1%'s highest rank is: &8%{_ranks}%")
+		else:
+			set {_uuid} to getUUID("%player%")
+			set {_ranks} to rank("%{_uuid}%")
+			send warnMsg("Your highest rank is: &8%{_ranks}%")
