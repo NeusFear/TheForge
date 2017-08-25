@@ -131,10 +131,10 @@ bot.on('message', message => {
         .setThumbnail(bot.user.avatarURL)
         .addField("Rules:", "**1)** Use the channels for their specified topic, please...\n**2)** Don't spam our text channels, no one wants all those notifications...\n**3)** If you have WWIII going on in the background, don't join a Voice Channel.\n**4)** Keep the racial slurs to a minimum.")
         .addField("Channels:", "**#welcome** : This channel is for infomation... you're reading it now.\n**#announcements** : Find out what's new in the community.\n**#ideas** : Submit suggestions here\n**#random** : Used for, casual chat, dank memes, links, etc.")
-        .addField("Other Channels:", "**#ark** : For our (Currently in Development) Server\n**#minecraft** : For our custom *@Minecraft* (Currently in Development)")
-        .addField("Roles:", "**@Admin** - who manage the game serevrs, website, and forums\n**@Moderator** - keep those pesky trolls under their bridges\n**@B** - A useless role for sexy people\n**@Privledged** - Has extra permissions on the Discord.\n**@Associate** - Sometimes we associate with them.\n**@<Game>** - People who play a game. (*duh*)")
-        .addField("Website:", "*Our website is currently being made:*\nProject led by: **@SkyForge** \nHelp from: **@TonyMaster21**")
-        .addField("Our Dedicated Servers", "**Ark:** *coming soon*\n**Minecraft:** *coming soon*")
+        .addField("Other Channels:", "**#ark** : For our Oficial Server\n**#minecraft** : For our custom *@Minecraft* (Currently in Development)")
+        .addField("Roles:", "**@Admin** - who manage the game servers, website, and forums\n**@Moderator** - keep those pesky trolls under their bridges\n**@B** - A useless role for sexy people\n**@Privledged** - Has extra permissions on the Discord.\n**@Associate** - Sometimes we associate with them.\n**@<Game>** - People who play a game. (*duh*)")
+        .addField("Website:", "*theforgecommunity.com*\nProject led by: **@SkyForge**")
+        .addField("Our Dedicated Servers", "**Ark:** *theforgeark.com*\n**Minecraft:** *coming soon*")
 
         message.channel.send({embed});
     }

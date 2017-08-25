@@ -32,7 +32,7 @@
       <img src="images/arktutorial/step-1-steam-view.png" /><br />
       go to favorites then add a server<br />
       <img src="images/arktutorial/step-2-steam-servers.png" /><br />
-      enter that and click this<br />
+      enter that and click this.<br />
       <img src="images/arktutorial/step-3-steam-add.png" /><br />
       join this<br />
       <img src="images/arktutorial/step-4-steam-done.png" /><br />
