@@ -6,7 +6,7 @@
     <title>The Forge</title>
 
       <!--Meta-->
-    <meta content="The Forge - Minecraft Network" name="description"></meta>
+    <meta content="The Forge - Online Community" name="description"></meta>
     <meta content="SkyForge_" name="author"></meta>
 
       <!--Favicon-->
