@@ -28,7 +28,7 @@ function chat(uuid: text , msg: text , discord: text = "main"):
 		set desc of embed "msg" to "%{_prefix}%%{_player}%► %{_msg}%"
 		if {_discord} is "main":
 			set color of embed "msg" to "GRAY"
-			set footer if embed "msg" to "Sent from our %{_server}% server."
+			set footer of embed "msg" to "Sent from our %{_server}% server."
 		if {_discord} is "discord":
 			set color of embed "msg" to "MAGENTA"
 		send embed "msg" to channel "343419389477126155" with "TheForge"
@@ -84,7 +84,7 @@ function chat2(uuid: text , msg: text , discord: text = "main"):
 		set desc of embed "msg" to "«%{_level}%»%{_prefix}%%{_player}%► %{_msg}%"
 		if {_discord} is "main":
 			set color of embed "msg" to "GRAY"
-			set footer if embed "msg" to "Sent from our %{_server}% server."
+			set footer of embed "msg" to "Sent from our %{_server}% server."
 		if {_discord} is "discord":
 			set color of embed "msg" to "MAGENTA"
 		send embed "msg" to channel "343419389477126155" with "TheForge"
@@ -92,7 +92,8 @@ function chat2(uuid: text , msg: text , discord: text = "main"):
 
 on chat:
 	cancel event
-	if server() is "rpg":
+	set {_server} to server()
+	if {_server} is "rpg":
 		chat2("%uuid of player%" , "%colored message%")
 	else:
 		chat("%uuid of player%" , "%colored message%")
