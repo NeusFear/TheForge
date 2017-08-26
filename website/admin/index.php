@@ -15,7 +15,7 @@
       <input type="submit" value="Push">
     </form>
     <form action="sync.php">
-      <input type="submit" value="Push">
+      <input type="submit" value="Sync">
     </form>
   </body>
 <html>
