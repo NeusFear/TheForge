@@ -42,7 +42,7 @@
             <div class="info"><img src="images/Icons/circular/list.png" /><br />Forums<p>To keep progressive gamers connected in a like-minded community.</p></div>
             <div class="info"><img src="images/Icons/circular/internet.png" /><br />Servers<p>Our community hosts dedicated servers avalible to anyone.</p></div>
           </span>
-          <br />
+          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
           <span class="flex" style="display:block;">
             <div class="info"><img src="images/Icons/circular/volume.png" /><br />Discord<p>The fastest way to communicate with other members, and recieve updates on server information.</p></div>
             <div class="info"><img src="images/Icons/circular/email.png" /><br />Staff<p>Our helpful staff endeavors to resolve all issues and answer all questions as quickly and helpfully as possible.</p></div>
