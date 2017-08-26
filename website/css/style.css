@@ -263,29 +263,13 @@ button:hover{
       background:rgba(0,0,0,0.85);
     }
     .transition{
-      height: 9000px;
+      height: 7500px;
     }
     .splash{
-      font-size: 100px;
-      text-align: center;
-      padding-top: 20px;
-      margin-bottom: 42px;
-      margin-top: -60px;
-      width: auto;
-      height: auto;
-      color: white;
-      background:rgba(0,0,0,0.85);
+      margin-left: 0px;
     }
     .splash-left{
-      font-size: 100px;
-      text-align: center;
-      padding-top: 20px;
-      margin-bottom: 42px;
-      margin-top: -60px;
-      width: auto;
-      height: auto;
-      color: white;
-      background:rgba(0,0,0,0.85);
+      margin-right: 0px;
     }
     .info {
       font-size: 72px;
