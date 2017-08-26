@@ -1,6 +1,6 @@
 function getUUID(player: text) :: text:
 	return {pd.playerdata::%{_player}%::uuid}
-	
+
 
 function playerdata(uuid: text, action: text = "get", type: text = "profile", atr: text = "username", mod: text = "", mod2: text = "") :: texts:
 	if {_action} is "get":
@@ -48,32 +48,32 @@ function playerdata(uuid: text, action: text = "get", type: text = "profile", at
 			set {_newjson} to "%json form of {_playerdata::*}%"
 			set line 1 in file "../_playerdata/%{_type}%/%{_uuid}%.json" to {_newjson}
 			stop
-	
-	
-	
+
+
+
 function getPlayer(uuid: text) :: text:
 	set {_player::*} to playerdata("%{_uuid}%")
 	return {_player::1}
-	
+
 function fromDiscord(id: text) :: text:
 	return "%{gd.general::discord::users::%{_id}%}%"
 
 function toDiscord(uuid: text) :: text:
 	set {_id::*} to playerdata("%{_uuid}%" , "get" , "profile" , "discord")
 	return {_id::1}
-	
+
 function stringtolist(string: text) :: texts:
 	replace all " and " with ", " in {_string}
 	set {_list::*} to {_string} split at ", "
 	return {_list::*}
-	
+
 function hasJoined(p: text) :: boolean:
 	set {_uuid} to getUUID("%{_p}%")
 	if file "../_playerdata/profile/%{_uuid}%.json" exists:
 		return true
 	else:
 		return false
-	
+
 function packetJson(text: text) :: jsonobject:
 	set {_t::*} to {_text} split by ""
 	loop {_t::*}:
@@ -88,7 +88,7 @@ function packetJson(text: text) :: jsonobject:
 	else:
 		set {_json} to "%{_json}%,{""text"":""%{_text}%"""
 	return json of string "{""extra"":[%{_json}%}],""text"":""""}"
-	
+
 #function message(s: string, p: players):
 #	set {_p} to new play_server_chat packet
 #	set "chatcomponent" pjson 0 of {_p} to json of string jsonFormat({_s})
@@ -128,7 +128,7 @@ function actionbar(player: players, text: text, stay: int, fadein: int, fadeout:
 		send loop-value packet {_reset}
 		send loop-value packet {_timepacket}
 		send loop-value packet {_actionpacket}
-  
+
 function updatePlayernames(player: text):
 	set {_uuid} to uuid of {_player}
 	set {_username::*} to playerdata("%{_uuid}%")
@@ -164,7 +164,7 @@ function updatePlayer(player: player):
 
 	updateIPAddress({_player})
 	updatePlayernames("%{_player}%")
-	
+
 function timespan(second: integer) :: string:
 	set {_yeart} to ""
 	set {_montht} to ""
@@ -172,7 +172,7 @@ function timespan(second: integer) :: string:
 	set {_dayt} to ""
 	set {_hourst} to ""
 	set {_mint} to ""
-	
+
 	loop ({_second} / 31536000) times:
 		if {_year} > 50:
 			stop
@@ -193,7 +193,7 @@ function timespan(second: integer) :: string:
 	loop ({_second} / 60) times:
 		remove 60 from {_second}
 		add 1 to {_min}
-	
+
 	if {_year} > 0:
 		set {_yeart} to "&f%{_year}% &7Years, "
 	if {_month} > 0:
@@ -211,7 +211,7 @@ function timespan(second: integer) :: string:
 	else:
 		set {_secondt} to "&f%{_second}%&7 Seconds."
 
-	
+
 	return "%{_yeart}%%{_montht}%%{_weekt}%%{_dayt}%%{_hourst}%%{_mint}%%{_secondt}%"
 
 function getIP(player: text , history: text = "none") :: texts:
@@ -417,7 +417,7 @@ function progress(length: integer , complete: integer , total: integer , color1:
 		else:
 			set {_return} to "%{_return}%%{_color2}%-"
 	return {_return}
-			
+
 options:
 	disrespectwarnings: 5
 	advertisementwarnings: 3
@@ -432,7 +432,7 @@ options:
 	moddingexplination: Using hacked clients or other mods that give the user an advantage over other users
 	sensitivityexplination: includes excessive language, nudity, or other types of suggestion
 	securityexplination: Anythign that threatens the security to the server or it's community
-	
+
 function infractions(action: text , player: text , type: text , enforcer: text = "not set", sendto: text = "console") :: text:
 	set {_uuid} to getUUID({_player})
 	set {_euuid} to getUUID({_enforcer})
@@ -479,7 +479,8 @@ function infractions(action: text , player: text , type: text , enforcer: text =
 					set {_enforcerstext%{_type}%} to "Enforcers:"
 					set {_ifneeded%{_type}%} to "[?]"
 					set {_enforcer} to getPlayer("%{_enforcer}%")
-					set {_enforcers%{_type}%} to "&5Enforcers:"
+					if {_enforcers%{_type}%} is not set:
+						set {_enforcers%{_type}%} to "&5Enforcers:"
 					set {_enforcers%{_type}%} to "%{_enforcers%{_type}%}%%nl%&8(%{_index}%) &f%{_enforcer}% &7on &f%{_when}%"
 				add 1 to {_index}
 
@@ -509,7 +510,7 @@ function infractions(action: text , player: text , type: text , enforcer: text =
 		playerdata("%{_uuid}%" , "modify" , "infractions" , "add" , "%{_type}% : %{_euuid}% : %now%")
 	if {_action} is "remove" or "revoke" or "delete":
 		playerdata("%{_uuid}%" , "modify" , "infractions" , "remove" , "%{_type}%" , "pardoned : %{_enforcer}%")
-			
+
 function joinMsg(p: text):
 	set {_uuid} to getUUID("%{_p}%")
 	set {_rank} to rank("%{_uuid}%" , "get" , "highest")
