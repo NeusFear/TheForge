@@ -285,9 +285,14 @@ button:hover{
     .mobilebreaks{
       display: block;
     }
-    .nav {
-      font-size: 48;
-      text-align: center;
+    .nav{
+      padding-left: 40%;
+    }
+    .navbutton {
+      font-size: 60;
+    }
+    .pages {
+      font-size: 60;
     }
 
 }
