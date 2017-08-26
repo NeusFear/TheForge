@@ -26,6 +26,7 @@ function scanDirectories($rootDir, $allData=array()) {
 
 if (file_exists("/home/_theforge/_git/TheForge/pull.sh")) {
     $output = shell_exec("/home/_theforge/_git/TheForge/pull.sh");
+    shell_exec("/home/_theforge/_git/TheForge/pull.sh");
     echo "<pre>$output</pre>";
 } else {
     print_r(scanDirectories("/home/_theforge/_git/TheForge"));
