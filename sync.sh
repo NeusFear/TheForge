@@ -14,7 +14,7 @@ rm -rfv /home/_theforge/_servers/minecraft/survival/plugins/Skript/scripts/*
 cp -r /home/_theforge/_git/TheForge/minecraft/scripts/global/* /home/_theforge/_servers/minecraft/lobby/plugins/Skript/scripts
 cp -r /home/_theforge/_git/TheForge/minecraft/scripts/global/* /home/_theforge/_servers/minecraft/RPG/plugins/Skript/scripts
 cp -r /home/_theforge/_git/TheForge/minecraft/scripts/global/* /home/_theforge/_servers/minecraft/survival/plugins/Skript/scripts
-cp -r /home/_theforge/_git/TheForge/minecraft/scripts/lobbyt/* /home/_theforge/_servers/minecraft/lobby/plugins/Skript/scripts
+cp -r /home/_theforge/_git/TheForge/minecraft/scripts/lobby/* /home/_theforge/_servers/minecraft/lobby/plugins/Skript/scripts
 cp -r /home/_theforge/_git/TheForge/minecraft/scripts/RPG/* /home/_theforge/_servers/minecraft/RPG/plugins/Skript/scripts
 cp -r /home/_theforge/_git/TheForge/minecraft/scripts/survival/* /home/_theforge/_servers/minecraft/survival/plugins/Skript/scripts
 echo "Replaced all scripts on all servers."
