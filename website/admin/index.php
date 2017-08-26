@@ -11,11 +11,13 @@
 
   </head>
   <body>
-    <form action="pull.php">
-      <input type="submit" value="Pull">
-    </form>
-    <form action="sync.php">
-      <input type="submit" value="Sync">
-    </form>
+    <div class="content">
+      <form action="pull.php">
+        <input type="submit" value="Pull">
+      </form>
+      <form action="sync.php">
+        <input type="submit" value="Sync">
+      </form>
+    </div>
   </body>
 <html>
