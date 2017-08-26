@@ -285,5 +285,9 @@ button:hover{
     .mobilebreaks{
       display: block;
     }
+    .nav {
+      font-size: 48;
+      text-align: center;
+    }
 
 }
