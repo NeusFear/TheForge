@@ -25,9 +25,7 @@ function scanDirectories($rootDir, $allData=array()) {
 
 
 if (file_exists("/home/_theforge/_git/TheForge/sync.sh")) {
-    $output = shell_exec("/home/_theforge/_git/TheForge/sync.sh");
-    header('Location: http://theforgecommunity.com/admin/index.php?success=true');
-    echo "<pre>$output</pre>";
+    echo exec("(cd /home/_theforge/_git/TheFOrge && ./sync.sh)");
 } else {
     print_r(scanDirectories("/home/_theforge/_git/TheForge"));
 }
