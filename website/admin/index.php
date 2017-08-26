@@ -11,7 +11,7 @@
 
   </head>
   <body>
-    <form action="push.php">
+    <form action="pull.php">
       <input type="submit" value="Push">
     </form>
     <form action="sync.php">
