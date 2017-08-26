@@ -249,9 +249,7 @@ button:hover{
     }
     .transition{
       height: 7500px;
-    }
-    .transition p{
-      font-size: 72;
+      font-size: 42;
     }
     .splash{
       margin-left: 0px;
