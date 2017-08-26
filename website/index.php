@@ -91,9 +91,11 @@
           <div class="connect">
             <br>
             <div class="splash-left"><font color="#ffc342">Connect with us:</font><br /></div>
-            <div class="info"><img src="images/Icons/social media/051-discord.png" /><br />Discord<p>Description of many words will go here. blah blah blah</p></div>
-            <div class="info"><img src="images/Icons/social media/051-twitter.png" /><br />Twitter<p>Description of many words will go here.</p></div>
-            <div class="info"><img src="images/Icons/social media/051-youtube.png" /><br />YouTube<p>Description of many words will go here.</p></div>
+            <span class="flex" style="display:block;">
+              <div class="info"><img src="images/Icons/social media/051-discord.png" /><br />Discord<p>Description of many words will go here. blah blah blah</p></div>
+              <div class="info"><img src="images/Icons/social media/051-twitter.png" /><br />Twitter<p>Description of many words will go here.</p></div>
+              <div class="info"><img src="images/Icons/social media/051-youtube.png" /><br />YouTube<p>Description of many words will go here.</p></div>
+            </span>
           </div>
 
         </div>
