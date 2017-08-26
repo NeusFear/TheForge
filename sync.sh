@@ -18,3 +18,5 @@ cp -r /home/_theforge/_git/minecraft/scripts/lobby/* /home/_theforge/_servers/mi
 cp -r /home/_theforge/_git/minecraft/scripts/RPG/* /home/_theforge/_servers/minecraft/RPG/plugins/Skript/scripts
 cp -r /home/_theforge/_git/minecraft/scripts/survival/* /home/_theforge/_servers/minecraft/survival/plugins/Skript/scripts
 echo "Replaced all scripts on all servers."
+
+echo "Sync complete."
