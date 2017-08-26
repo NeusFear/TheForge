@@ -252,6 +252,8 @@ button:hover{
     }
     .transition p{
       font-size: 48px;
+      margin-left: 50px;
+      margin-right: 50px;
     }
     .splash{
       margin-left: 0px;
