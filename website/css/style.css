@@ -21,6 +21,7 @@ main{
 }
 .flex{
     display: flex;
+    width: 100%;
 }
 .section{
   width: auto;
