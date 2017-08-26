@@ -6,42 +6,6 @@ function chat(uuid: text , msg: text , discord: text = "main"):
 		set {_premsg} to ""
 		loop {_premsg::*}:
 			set {_premsg} to "%{_premsg}%%loop-value%"
-	else:
-		set {_rank} to rank("%{_uuid}%" , "get" , "highest")
-		set {_prefix} to prefix("%{_rank}%")
-		if {_discord} is "main":
-			set {_server} to "&a• ||ttp: &f%{_player}% &7is online on server &fMain"
-		if {_discord} is "discord":
-			set {_server} to "&5• ||ttp: &f%{_player}% &7message sent from &5Discord"
-		set {_user} to "%{_prefix}%%{_player}%||ttp:&f%{_player}% is an %{_prefix}%"
-		set {_donated} to "&7 has donated &a$x&7 to &6The Forge"
-		set {_forums} to "&7 is &fVerified &7on the Forums"
-
-		set {_message} to "%{_server}%||%{_user}%%nl%%{_donated}%%nl%%{_forums}%||&7► &f%{_msg}%"
-		json("@a" , "%{_message}%")
-
-
-		set {_server} to server()
-		if {_server} is "rpg":
-			set {_server} to "secret"
-		make embed "msg"
-		set desc of embed "msg" to "%{_prefix}%%{_player}%► %{_msg}%"
-		if {_discord} is "main":
-			set color of embed "msg" to "GRAY"
-			set footer of embed "msg" to "Sent from our %{_server}% server."
-		if {_discord} is "discord":
-			set color of embed "msg" to "MAGENTA"
-		send embed "msg" to channel "343419389477126155" with "TheForge"
-		clear embed "msg"
-
-function chat2(uuid: text , msg: text , discord: text = "main"):
-	set {_player} to getPlayer("%{_uuid}%")
-	set {_premsg::*} to {_msg} split at ""
-	if "%{_premsg::1}%" is "@":
-		delete {_premsg::1}
-		set {_premsg} to ""
-		loop {_premsg::*}:
-			set {_premsg} to "%{_premsg}%%loop-value%"
 		guild("%{_uuid}%" , "msg" , "%{_player}%&f►&7 %{_premsg}%")
 	else:
 		set {_rank} to rank("%{_uuid}%" , "get" , "highest")
@@ -92,8 +56,4 @@ function chat2(uuid: text , msg: text , discord: text = "main"):
 
 on chat:
 	cancel event
-	set {_server} to server()
-	if {_server} is "rpg":
-		chat2("%uuid of player%" , "%colored message%")
-	else:
-		chat("%uuid of player%" , "%colored message%")
+	chat("%uuid of player%" , "%colored message%")
