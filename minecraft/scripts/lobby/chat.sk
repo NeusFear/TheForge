@@ -25,7 +25,7 @@ function chat(uuid: text , msg: text , discord: text = "main"):
 		if {_server} is "rpg":
 			set {_server} to "secret"
 		make embed "msg"
-		set desc of embed "msg" to "%{_prefix}%%{_player}%► %{_msg}%"
+		set desc of embed "msg" to "%{_prefix}%%{_player}%► %uncolored {_msg}%"
 		if {_discord} is "main":
 			set color of embed "msg" to "GRAY"
 			set footer of embed "msg" to "Sent from our %{_server}% server."

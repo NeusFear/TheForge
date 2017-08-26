@@ -104,6 +104,10 @@ on guild message receive seen by "TheForge":
 			make embed "list"
 			set title of embed "list" to "Online Players: (%{_players}%)"
 			set color of embed "list" to "GREEN"
+			set {_server} to server()
+			if {_server} is "rpg":
+				set {_server} to "secret"
+			set desc of embed "list" to "Online players on our %{_server}% server"
 			loop {_ranks::*}:
 				set {_prefix} to prefix("%loop-value%")
 				set {_prefix} to "%uncolored {_prefix}%"
