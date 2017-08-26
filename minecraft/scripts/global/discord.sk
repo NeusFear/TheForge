@@ -48,7 +48,7 @@ command /discord:
 				set {_codes::*} to get with discordque("get", "ids")
 				if {_codes::%{_gen}%} is set: #make sure that code isn't already being used
 					set {_gen} to randomChar(10)
-				playerdata("%uuid of player%", "modify", "discord/minecraft", "code", "%{_gen}%") :: texts:
+				playerdata("%uuid of player%", "modify", "discord/minecraft", "code", "%{_gen}%")
 				discordque("add", "%{_gen}%", "%uuid of player%")
 				send warnMsg("You havent got an ID yet, let us Generate one...")
 				send warnMsg("&7Your Discord ID is &f%{_gen}%&7 join it in the %nl%'&fjoin-your-account&7' channel on our %nl%Discord: &fhttps://discord.gg/Q9h68tS")
