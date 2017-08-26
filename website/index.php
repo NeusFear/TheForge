@@ -78,7 +78,7 @@
 
           <div class="parallax" id="parallax-4" style="min-height:50px;"></div>
 
-          <div class="transition">
+          <div class="transition" id="communitytransition">
             <div class="splash-left"><font color="#ffc342">COMMUNITY</font><br /></div>
             <p>Our community hosts dedicated servers avalible to anyone</p>
             <span class="flex" style="display:block;">

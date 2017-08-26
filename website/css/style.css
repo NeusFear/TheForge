@@ -250,6 +250,9 @@ button:hover{
     .transition{
       height: 7500px;
     }
+    #communitytransition {
+      height: 3750px;
+    }
     .transition p{
       font-size: 48px;
       margin-left: 50px;
