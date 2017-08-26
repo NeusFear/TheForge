@@ -247,29 +247,23 @@ button:hover{
     .parallax {
         background-attachment: scroll;
     }
-    .splash{
-      overflow: hidden;
-      font-family: Big John;
-      font-size: 100px;
-      text-align: left;
-      padding-top: 20px;
-      padding-left: 230px;
-      margin-left: -60px;
-      margin-bottom: 42px;
-      margin-top: -60px;
-      width: auto;
-      height: auto;
-      color: white;
-      background:rgba(0,0,0,0.85);
-    }
     .transition{
       height: 7500px;
     }
+    .transition p{
+      font-size: 42;
+    }
     .splash{
       margin-left: 0px;
+      text-align: center;
+      padding-left: 0px;
+      margin-left: -0px;
     }
     .splash-left{
       margin-right: 0px;
+      text-align: center;
+      padding-left: 0px;
+      margin-left: -0px;
     }
     .info {
       font-size: 72px;
