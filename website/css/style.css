@@ -260,4 +260,39 @@ button:hover{
     .transition{
       height: 1600px;
     }
+    .splash{
+      font-size: 100px;
+      text-align: center;
+      padding-top: 20px;
+      margin-bottom: 42px;
+      margin-top: -60px;
+      width: auto;
+      height: auto;
+      color: white;
+      background:rgba(0,0,0,0.85);
+    }
+    .splash-left{
+      font-size: 100px;
+      text-align: center;
+      padding-top: 20px;
+      margin-bottom: 42px;
+      margin-top: -60px;
+      width: auto;
+      height: auto;
+      color: white;
+      background:rgba(0,0,0,0.85);
+    }
+    .info {
+      font-size: 72px;
+      width: 33%;
+    }
+    .info img{
+      height: 600px;
+      width: 600px;
+      border-radius: 300px;
+    }
+    .info p{
+      font-size: 42px;
+    }
+
 }
