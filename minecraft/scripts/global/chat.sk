@@ -19,7 +19,21 @@ function chat(uuid: text , msg: text , discord: text = "main"):
 
 		set {_message} to "%{_server}%||%{_user}%%nl%%{_donated}%%nl%%{_forums}%||&7► &f%{_msg}%"
 		json("@a" , "%{_message}%")
-		
+
+
+		set {_server} to server()
+		if {_server} is "rpg":
+			set {_server} to "secret"
+		make embed "msg"
+		set desc of embed "msg" to "%{_prefix}%%{_player}%► %{_msg}%"
+		if {_discord} is "main":
+			set color of embed "msg" to "GRAY"
+			set footer if embed "msg" to "Sent from our %{_server}% server."
+		if {_discord} is "discord":
+			set color of embed "msg" to "MAGENTA"
+		send embed "msg" to channel "343419389477126155" with "TheForge"
+		clear embed "msg"
+
 function chat2(uuid: text , msg: text , discord: text = "main"):
 	set {_player} to getPlayer("%{_uuid}%")
 	set {_premsg::*} to {_msg} split at ""
@@ -55,17 +69,22 @@ function chat2(uuid: text , msg: text , discord: text = "main"):
 
 		set {_message} to "%{_server}%||%{_level}%||%{_user}%%nl%%{_donated}%%nl%%{_forums}%%nl%%{_guild}%||&7► &f%{_msg}%"
 		json("@a" , "%{_message}%")
-		
+
 		set {_prefix} to "%uncolored {_prefix}%"
 		set {_msg} to "%uncolored {_msg}%"
 		set {_level} to level("%{_uuid}%" , "get" , "level")
 		set {_level} to {_level} parsed as integer
 		if {_level} < 10:
 			set {_level} to "0%{_level}%"
+
+		set {_server} to server()
+		if {_server} is "rpg":
+			set {_server} to "secret"
 		make embed "msg"
 		set desc of embed "msg" to "«%{_level}%»%{_prefix}%%{_player}%► %{_msg}%"
 		if {_discord} is "main":
 			set color of embed "msg" to "GRAY"
+			set footer if embed "msg" to "Sent from our %{_server}% server."
 		if {_discord} is "discord":
 			set color of embed "msg" to "MAGENTA"
 		send embed "msg" to channel "343419389477126155" with "TheForge"

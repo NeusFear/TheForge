@@ -48,6 +48,11 @@ function playerdata(uuid: text, action: text = "get", type: text = "profile", at
 			set {_newjson} to "%json form of {_playerdata::*}%"
 			set line 1 in file "../_playerdata/%{_type}%/%{_uuid}%.json" to {_newjson}
 			stop
+		if {_type} contains "discord":
+			set {_playerdata::%{_atr}%} to {_mod}
+			set {_newjson} to "%json form of {_playerdata::*}%"
+			set line 1 in file "../_playerdata/%{_type}%/%{_uuid}%.json" to {_newjson}
+			stop
 
 
 
