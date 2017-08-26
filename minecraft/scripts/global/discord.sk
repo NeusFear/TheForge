@@ -40,12 +40,12 @@ command /discord:
 			set {_code} to first element out of playerdata("%uuid of player%" , "get", "discord/minecraft", "code")
 			send warnMsg("&7Your Discord code is &f%{_code}%&7 join it in the %nl%'&fconfirm-minecraft&7' channel on our %nl%Discord: &fhttps://discord.gg/Q9h68tS")
 		else:
-			set {_id} to playerdata("%uuid of player%" , "get", "discord/minecraft", "id")
+			set {_id} to first element out of playerdata("%uuid of player%" , "get", "discord/minecraft", "id")
 			if {_id} is set:
 				send warnMsg("Your account is already joined to user id: &f%{_id}%")
 			else:
 				set {_gen} to randomChar(10)
-				set {_codes::*} to get with discordque("get", "ids")
+				set {_codes::*} to discordque("get", "ids")
 				if {_codes::%{_gen}%} is set: #make sure that code isn't already being used
 					set {_gen} to randomChar(10)
 				playerdata("%uuid of player%", "modify", "discord/minecraft", "code", "%{_gen}%")
@@ -57,7 +57,7 @@ on guild message receive seen by "TheForge":
 	set {_args::*} to event-string split at " "
 	if "%event-channel%" is "{@confirmchannel}":
 		set {_id} to {_args::1}
-		set {_codes::*} to get with discordque("get", "ids")
+		set {_codes::*} to discordque("get", "ids")
 		if {_codes::%{_id}%} is set:
 			make embed "sucess"
 			set title of embed "sucess" to "Sucess!"
@@ -66,8 +66,8 @@ on guild message receive seen by "TheForge":
 			set {_player} to getPlayer("%{_codes::%{_id}%}%")
 			add field "**Account Connected**", with value "Welcome to our discord %{_player}%", split true to embed "sucess"
 
-			playerdata("%uuid of player%", "modify", "discord/minecraft", "code", "verified")
-			playerdata("%uuid of player%", "modify", "discord/minecraft", "id", "%event-user%")
+			playerdata("%{_codes::%{_id}%}%", "modify", "discord/minecraft", "code", "verified")
+			playerdata("%{_codes::%{_id}%}%", "modify", "discord/minecraft", "id", "%event-user%")
 			playerdata("%event-user%", "modify", "discord/discord", "uuid", "%{_codes::%{_id}%}%")
 			give role "connected to minecraft" to user event-user in guild "{@guild}" with bot "TheForge"
 			discordque("remove", "%{_gen}%")
