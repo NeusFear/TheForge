@@ -37,7 +37,7 @@ function discordque(action: text = "get" , type: text = "ids" , atr: text = "") 
 command /discord:
 	trigger:
 		if playerdata("%uuid of player%" , "get", "discord/minecraft", "code") is set:
-			set {_code} to playerdata("%uuid of player%" , "get", "discord/minecraft", "code")
+			set {_code} to first element out of playerdata("%uuid of player%" , "get", "discord/minecraft", "code")
 			send warnMsg("&7Your Discord code is &f%{_code}%&7 join it in the %nl%'&fconfirm-minecraft&7' channel on our %nl%Discord: &fhttps://discord.gg/Q9h68tS")
 		else:
 			set {_id} to playerdata("%uuid of player%" , "get", "discord/minecraft", "id")
