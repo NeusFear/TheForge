@@ -216,6 +216,11 @@ button:hover{
 }
 
 
+.mobilebreaks{
+  display: none;
+}
+
+
 
 
 .parallax {
@@ -284,7 +289,7 @@ button:hover{
     }
     .info {
       font-size: 72px;
-      width: 33%;
+      width: 100%;
     }
     .info img{
       height: 600px;
@@ -293,6 +298,9 @@ button:hover{
     }
     .info p{
       font-size: 42px;
+    }
+    .mobilebreaks{
+      display: block;
     }
 
 }
