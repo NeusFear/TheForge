@@ -88,7 +88,7 @@
 
           <div class="parallax" id="parallax-5"></div>
 
-          <div class="connect">
+          <div class="connect" style="height: 1200px;">
             <br>
             <div class="splash-left"><font color="#ffc342">Connect with us:</font><br /></div>
             <div class="info" style="margin-left: 20%;"><img src="images/Icons/social media/051-discord.png" /><br />Discord<p>Description of many words will go here. blah blah blah</p></div>
