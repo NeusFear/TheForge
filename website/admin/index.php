@@ -12,7 +12,7 @@
   </head>
   <body>
     <form action="pull.php">
-      <input type="submit" value="Push">
+      <input type="submit" value="Pull">
     </form>
     <form action="sync.php">
       <input type="submit" value="Sync">
