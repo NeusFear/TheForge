@@ -1,7 +1,0 @@
-on skript load:
-	login to user with token "MzQzMDU4MDU4MDg1NDAwNTc3.DGaHLw.0hMP87zUVPJ1QBHsntthhF1UbVY" with name "TheForge"
-	make embed "start"
-	set color of embed "start" to "GREEN"
-	set desc of embed "start" to "Secret Server Started"
-	set footer of embed "start" to "%now%"
-	send embed "start" to channel "343419389477126155" with "TheForge"
