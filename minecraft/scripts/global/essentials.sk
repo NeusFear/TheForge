@@ -22,7 +22,7 @@ on server list ping:
 	set {_ip} to "%{_ip}%"
 	replace all "/" with "" in {_ip}
 	set motd to "&7[&6The Forge&7]%nl%&71.12.1"
-		
+
 on packet event status_server_server_info:
 	put json "ServerPing" pjson 0 of event-packet in listvar {_l::*}
 	delete {_l::players::sample::*}
@@ -35,18 +35,19 @@ on join:
 	set {_rank} to rank("%uuid of player%" , "get" , "highest")
 	set {_prefix} to prefix("%{_rank}%")
 	set player's tab name to "%{_prefix}%%player%"
-		
+
 function addPlaytime(uuid: text):
 	set {_thus} to {td.temp::playtime::%{_uuid}%}
 	set {_now} to convert date now to unix
 	set {_total} to {_now} - {_thus}
 	
+
 	set {_total} to {_total} parsed as integer
 	set {pd.playerdata::%{_uuid}%::playtime} to {pd.playerdata::%{_uuid}%::playtime} parsed as integer
 	add {_total} to {pd.playerdata::%{_uuid}%::playtime}
 	set {td.temp::playtime::%{_uuid}%} to convert date now to unix
-	
-	
+
+
 on join:
 	set {td.temp::playtime::%uuid of player%} to convert date now to unix
 on quit:
@@ -70,11 +71,11 @@ command /playtime [<text>]:
 			set {_current} to "%{pd.playerdata::%{_uuid}%::playtime}%" parsed as integer
 			set {_time} to timespan({_current})
 			send "&7[&6The Forge Statistics&7] &fYou&7 have played %{_time}%"
-		
+
 command /pl:
 	trigger:
 		make player execute command "/plugins"
-		
+
 command /whitelist [<text>] [<text>]:
 	trigger:
 #		if arg 1 is "sort":
@@ -111,6 +112,7 @@ command /whitelist [<text>] [<text>]:
 			if rank("%uuid of player%" , "is" , "admin") is "true":
 				if {cd.whitelist} is true:
 					send sucessMsg("Whitelist set to &4OFF")
+					delete {cd.whitelist}
 				else:
 					send sucessMsg("Whitelist set to &2ON")
 					set {cd.whitelist} to true
@@ -168,7 +170,7 @@ command /serverstats:
 			send "&7-------------------------[&6*&7]&7-------------------------"
 		else:
 			send errorMsg("All you need to see performance is &f/tps")
-		
+
 command /killall:
 	trigger:
 		if rank("%uuid of player%" , "is" , "moderator" , "+") is "true":
@@ -178,7 +180,7 @@ command /killall:
 			send errorMsg("killed all entities")
 		else:
 			send errorMsg("That command is to dangerous for someone of your strength")
-		
+
 command /speed [<number>]:
 	trigger:
 		if rank("%uuid of player%" , "is" , "builder" , "+") is "true":
@@ -200,7 +202,7 @@ command /speed [<number>]:
 					send warnMsg("Reset your walk speed to &f1")
 		else:
 			errorMsg("You can't change your speed.")
-		
+
 command /list:
 	aliases: online
 	trigger:
@@ -216,7 +218,7 @@ command /list:
 			send "%{_prefix}% &7(%size of {_players::%loop-value%::*}%):"
 			send "%{_players::%loop-value%::*}%"
 		send "&7-------------------------[&6*&7]&7-------------------------"
-		
+
 command /setwarp [<text>]:
 	trigger:
 		if rank("%uuid of player%" , "is" , "admin") is "true":
