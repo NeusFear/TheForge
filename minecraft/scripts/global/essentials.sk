@@ -40,7 +40,6 @@ function addPlaytime(uuid: text):
 	set {_thus} to {td.temp::playtime::%{_uuid}%}
 	set {_now} to convert date now to unix
 	set {_total} to {_now} - {_thus}
-	
 
 	set {_total} to {_total} parsed as integer
 	set {pd.playerdata::%{_uuid}%::playtime} to {pd.playerdata::%{_uuid}%::playtime} parsed as integer
