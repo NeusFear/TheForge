@@ -83,7 +83,7 @@
             <p>Our community hosts dedicated servers avalible to anyone</p>
             <span class="flex" style="display:block;">
               <div class="info"><div class="icon"><img src="images/minecrafticon.png" /></div><br />Minecraft<p>theforgemc.com (Currently under development)</p></div>
-              <div class="info"><div class="icon"><img src="images/arkicon.png" /></div><br />Ark<p>theforgeark.com</p></div>
+              <div class="info"><div class="icon"><img src="images/arkicon.png" /></div><br />Ark<p>theforgeark.com</p><br /><form action="arktutorial.php"><input type="submit" value="Ark Help"></form></div>
               <div class="info"><div class="icon"><img src="images/Icons/construction/engineer.png" /></div><br />Coming Soon...<p>more servers to come..</p></div>
             </span>
           </div>
