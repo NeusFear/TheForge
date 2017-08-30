@@ -206,6 +206,22 @@ button:hover{
   border: 4px solid;
   border-color: white;
 }
+input.submit{
+  background-color: #ffc342;
+  color: white;
+  border: 4px solid;
+  border-color: #ffc342;
+  transition-duration: 0.25s;
+  font-size: 30px;
+  font-family: Big John;
+  padding: 10px;
+}
+input.submit:focus{
+  background-color: #ffc342;
+  color: white;
+  border: 4px solid;
+  border-color: white;
+}
 .navbutton{
   padding: 10px 0px 10px 0px;
   font-size: 20px;
