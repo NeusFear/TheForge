@@ -1,0 +1,101 @@
+command /sethome [<text>]:
+	trigger:
+		set {_homes::*} to {gd.general::%uuid of player%::homes::*}
+		if size of {_homes::*} = 0:
+			if rank("%uuid of player%" , "is" , "noble" , "+") is "true":
+				if arg 1 is not set:
+					set {_name} to "home"
+				else:
+					set {_name} to "%arg 1%"
+				set {gd.general::%uuid of player%::%{_name}%} to location of player
+				send warnMsg("Home set.")
+			else:
+				set {gd.general::%uuid of player%::home} to location of player
+		if size of {_homes::*} > 1:
+			if rank("%uuid of player%" , "is" , "noble" , "+") is "true":
+				if arg 1 is not set:
+					set {_name} to "home"
+				else:
+					set {_name} to "%arg 1%"
+				set {gd.general::%uuid of player%::%{_name}%} to location of player
+				send warnMsg("Home set.")
+			else:
+				send errorMsg("You have reached the max number of homes")
+		if size of {_homes::*} > 3:
+			if rank("%uuid of player%" , "is" , "hero" , "+") is "true":
+				if arg 1 is not set:
+					set {_name} to "home"
+				else:
+					set {_name} to "%arg 1%"
+				set {gd.general::%uuid of player%::%{_name}%} to location of player
+				send warnMsg("Home set.")
+			else:
+				send errorMsg("You have reached the max number of homes")
+		if size of {_homes::*} > 5:
+			if rank("%uuid of player%" , "is" , "paladain" , "+") is "true":
+				if arg 1 is not set:
+					set {_name} to "home"
+				else:
+					set {_name} to "%arg 1%"
+				set {gd.general::%uuid of player%::%{_name}%} to location of player
+				send warnMsg("Home set.")
+			else:
+				send errorMsg("You have reached the max number of homes")
+		if size of {_homes::*} > 10:
+			if rank("%uuid of player%" , "is" , "royal" , "+") is "true":
+				if arg 1 is not set:
+					set {_name} to "home"
+				else:
+					set {_name} to "%arg 1%"
+				set {gd.general::%uuid of player%::%{_name}%} to location of player
+				send warnMsg("Home set.")
+			else:
+				send errorMsg("You have reached the max number of homes")
+		if size of {_homes::*} > 15:
+			if rank("%uuid of player%" , "is" , "legend" , "+") is "true":
+				if arg 1 is not set:
+					set {_name} to "home"
+				else:
+					set {_name} to "%arg 1%"
+				set {gd.general::%uuid of player%::%{_name}%} to location of player
+				send warnMsg("Home set.")
+			else:
+				send errorMsg("You have reached the max number of homes")
+		if size of {_homes::*} > 25:
+			if rank("%uuid of player%" , "is" , "moderator" , "+") is "true":
+				if arg 1 is not set:
+					set {_name} to "home"
+				else:
+					set {_name} to "%arg 1%"
+				set {gd.general::%uuid of player%::%{_name}%} to location of player
+				send warnMsg("Home set.")
+			else:
+				send errorMsg("You have reached the max number of homes")
+				
+command /home [<text>]:
+	trigger:
+		if arg 1 is set:
+			if {gd.general::%uuid of player%::%arg 1%} is set:
+				teleport player to {gd.general::%uuid of player%::%arg 1%}
+				send warnMag("Teleporting...")
+			else:
+				send warnMsg("%arg 1% is not a valid home name")
+		else:
+			teleport player to {gd.general::%uuid of player%::home}
+			send warnMag("Teleporting...")
+			
+command /homes:
+	trigger:
+		send "&fList of %player%'s homes: &7%{gd.general::%uuid of player%::*}%"
+		
+command /delhome:
+	trigger:
+		if arg 1 is set:
+			if {gd.general::%uuid of player%::%arg 1%} is set:
+				delete {gd.general::%uuid of player%::%arg 1%}
+				send warnMsg("Home %arg 1% deleted")
+			else:
+				send warnMsg("%arg 1% is not a valid home name")
+		else:
+			delete {gd.general::%uuid of player%::home}
+			send warnMsg("Home deleted")
