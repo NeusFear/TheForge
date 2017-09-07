@@ -1,6 +1,7 @@
 cd
 
-rm -rfv /var/www/html/*
+shopt -s extglob
+rm -rf !(forums)
 cp -r /home/_theforge/_git/TheForge/website/* /var/www/html
 echo "Deleted old, and Transfered website files."
 
