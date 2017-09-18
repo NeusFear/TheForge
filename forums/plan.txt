@@ -1,0 +1,22 @@
+###############################
+# File sorting:											#
+###############################
+	/forums
+		/index.php
+		/topics
+			/category.php
+			/category/posts
+				/title.json
+		/media
+			/userdata
+				/userID
+					/avatar.png
+					
+					#these will need to happen when we get a storage database (implement them, but don't allow acess yet)
+					/banner.png
+					/uploads
+						/file.ext
+###############################
+
+Things to Research:
+	- 
