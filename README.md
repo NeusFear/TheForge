@@ -18,3 +18,12 @@ for /minecraft there are more subdirectories
     /survival : sent only to the survival server
     /rpg      : sent only to the rpg server
     /lobby    : sent only to the lobby server
+
+
+
+Commit Naming:
+  "<Category> | <files> v<release>.<update>.<patch><revision>"
+  be sure do give a description that describes ALL additions in the commit
+  
+  Example:      "Minecraft | infractions.sk v1.2.3b"
+  Description:  "reverted fix from v1.2.1"
