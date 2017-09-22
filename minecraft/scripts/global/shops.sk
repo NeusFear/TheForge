@@ -1,0 +1,46 @@
+on place of sign:
+	if line 1 of player's targeted block is "[buy]":
+		if rank("%uuid of player%" , "is" , "moderator") is "true":
+			if line 2 of player's targeted block is set:
+				if line 3 of player's targeted block is set:
+					set {_ammount} to "%line 3 of player's targeted block%" parsed as integer
+				else:
+					set {_ammount} to 1
+				set {_price} to getprice("buy", "%line 2 of player's targeted block%")
+				set {_totalprice} to {_price} * {_ammount}
+				
+				set line 1 of player's targeted block to "&b[Buy]"
+				set line 1 of player's targeted block to "%{_ammount}%"
+				set line 1 of player's targeted block to "$%{_price}%"
+			else:
+				send errorMsg("Please specify the item you want to sell to players.")
+		else:
+			send errorMsg("You don't have permission to create shops, try using /chestshop")
+	if line 1 of player's targeted block is "[sell]":
+		if rank("%uuid of player%" , "is" , "moderator") is "true":
+			if line 2 of player's targeted block is set:
+				if line 3 of player's targeted block is set:
+					set {_ammount} to "%line 3 of player's targeted block%" parsed as integer
+				else:
+					set {_ammount} to 1
+				set {_price} to getprice("sell", "cost", "%line 2 of player's targeted block%")
+				set {_totalprice} to {_price} * {_ammount}
+				
+				set line 1 of player's targeted block to "&b[Sell]"
+				set line 1 of player's targeted block to "%{_ammount}%"
+				set line 1 of player's targeted block to "$%{_price}%"
+			else:
+				send errorMsg("Please specify the item you want to buy from players.")
+		else:
+			send errorMsg("You don't have permission to create shops, try using /chestshop")
+			
+on rightclick on sign:
+	if line 1 of sign is "%uncolored ""[Buy]""%":
+		set {_ammount} to "%line 3 of player's clicked block%" parsed as integer
+		set {_item} to "%line 4 of player's clicked block%" parsed as item
+		if player has enough space for {_ammount} {_item}:
+			#if player has enough money:
+			#	do stuff
+			send warnMsg("This feature is not implemented yet.")
+		else:
+			send errorMsg("You dont have enough space to hold the items you request.")

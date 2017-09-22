@@ -218,6 +218,12 @@ function timespan(second: integer) :: string:
 
 
 	return "%{_yeart}%%{_montht}%%{_weekt}%%{_dayt}%%{_hourst}%%{_mint}%%{_secondt}%"
+	
+function getprice(type: text , item: text) :: number:
+	$thread
+	set {_price} to skutil yaml value "%{_type}%.%{_item}%" from file "pricelist.yml" #this needs to be created in a data file
+	return {_price}
+	
 
 function getIP(player: text , history: text = "none") :: texts:
 	set {_uuid} to getUUID("%{_player}%")
