@@ -90,6 +90,7 @@ bot.on('message', message => {
     const embed = new Discord.RichEmbed()
       .setAuthor("The Forge", bot.user.avatarURL)
       .setColor(0xffc342)
+      .setDescription("TheForge Servers:")
       .addField("Ark: " + config.arkip + "", "go to theforgecommunity.com/arktutorial.php for more info.")
 
       message.channel.send({embed});
