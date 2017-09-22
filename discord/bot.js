@@ -1,6 +1,9 @@
 ﻿const Discord = require('discord.js');
 const fs = require('fs');
 const bot = new Discord.Client();
+const token = "MzQzMDU4MDU4MDg1NDAwNTc3.DGaHLw.0hMP87zUVPJ1QBHsntthhF1UbVY";
+const website = "**http://theforgecommunity.com/**";
+const prefix = "!";
 
 
 
@@ -13,37 +16,18 @@ function includes(k) {
   return false;
 }
 
-
-
-process.on("unhandledRejection", err => console.error(err.stack))
-
-try {
-  if (fs.existsSync("./data/config.json")) {
-    console.log("Configuration file already exists. Starting bot...");
-  } else {
-    console.log("Configuration file does not exist. Creating file...");
-    fs.mkdir("./data/");
-    fs.writeFileSync("./data/config.json", fs.readFileSync("./template/config.json", "utf8"));
-    console.log("Configuration file successfully created. Starting bot...");
-  }
-} catch (err) {
-  console.log("There was an error!");
-  console.log(err);
-}
-const config = require("./data/config.json");
-
-bot.login(config.token);
+bot.login(token);
 
 bot.on('ready', () => {
   console.log('TheForge bot is now ready.');
 });
 
 bot.on('message', message => {
-  if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+  if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-  if (message.content.startsWith(config.prefix + "ping")) {
+  if (message.content.startsWith(prefix + "ping")) {
     message.channel.send("pong!");
-  } else if (message.content.startsWith(config.prefix + "help")) {
+  } else if (message.content.startsWith(prefix + "help")) {
     const embed = new Discord.RichEmbed()
       .setAuthor("The Forge", bot.user.avatarURL)
       .setColor(0xffc342)
@@ -54,7 +38,7 @@ bot.on('message', message => {
       .setThumbnail(bot.user.avatarURL)
 
       message.channel.send({embed});
-  } else if (message.content.startsWith(config.prefix + "online")) {
+  } else if (message.content.startsWith(prefix + "online")) {
     str = message.content;
     arr = str.split(" ");
     if(!arr[1]) {
@@ -69,7 +53,7 @@ bot.on('message', message => {
         message.channel.send({embed});
     }
 
-    } else if (message.content.startsWith(config.prefix + "list")) {
+    } else if (message.content.startsWith(prefix + "list")) {
       str = message.content;
       arr = str.split(" ");
       if(!arr[1]) {
@@ -84,7 +68,7 @@ bot.on('message', message => {
           message.channel.send({embed});
         }
 
-  } else if (message.content.startsWith(config.prefix + "info")) {
+  } else if (message.content.startsWith(prefix + "info")) {
     const embed = new Discord.RichEmbed()
       .setAuthor("The Forge", bot.user.avatarURL)
       .setColor(0xffc342)
@@ -95,21 +79,21 @@ bot.on('message', message => {
       .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
 
       message.channel.send({embed});
-  } else if (message.content.startsWith(config.prefix + "website")) {
+  } else if (message.content.startsWith(prefix + "website")) {
     const embed = new Discord.RichEmbed()
       .setAuthor("The Forge", bot.user.avatarURL)
       .setColor(0xffc342)
-      .setDescription("Our website is: " + config.website)
+      .setDescription("Our website is: " + website)
 
       message.channel.send({embed});
-  } else if (message.content.startsWith(config.prefix + "servers")) {
+  } else if (message.content.startsWith(prefix + "servers")) {
     const embed = new Discord.RichEmbed()
       .setAuthor("The Forge", bot.user.avatarURL)
       .setColor(0xffc342)
       .addField("Ark: " + config.arkip + "", "go to theforgecommunity.com/arktutorial.php for more info.")
 
       message.channel.send({embed});
-  } else if (message.content.startsWith(config.prefix + "dick")) {
+  } else if (message.content.startsWith(prefix + "dick")) {
     const embed = new Discord.RichEmbed()
       .setAuthor("The Forge", bot.user.avatarURL)
       .setColor(0xffdbaa)
@@ -120,7 +104,7 @@ bot.on('message', message => {
       message.channel.send({embed});
   } else if (message.content.startsWith("hi theforge")) {
     message.reply('Hi!');
-  } else if (message.content.startsWith(config.prefix + "welcome")) {
+  } else if (message.content.startsWith(prefix + "welcome")) {
     console.log(message.author.username);
     if (message.author.username === "SkyForge") {
       const embed = new Discord.RichEmbed()
@@ -138,7 +122,7 @@ bot.on('message', message => {
 
         message.channel.send({embed});
     }
-  } else if (message.content.startsWith(config.prefix + "invite")) {
+  } else if (message.content.startsWith(prefix + "invite")) {
   console.log(message.author.username);
     const embed = new Discord.RichEmbed()
       .setAuthor("Invite your friends!", bot.user.avatarURL)
@@ -151,7 +135,7 @@ bot.on('message', message => {
       message.channel.send({embed});
 
 
-    } else if (message.content.startsWith(config.prefix + "iplay")) {
+    } else if (message.content.startsWith(prefix + "iplay")) {
       str = message.content;
       arr = str.split(" ");
       let member = message.member;
