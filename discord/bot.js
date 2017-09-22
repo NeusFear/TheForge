@@ -91,9 +91,10 @@ bot.on('message', message => {
       .setAuthor("The Forge", bot.user.avatarURL)
       .setColor(0xffc342)
       .setDescription("TheForge Servers:")
-      .addField("Ark: " + config.arkip + "", "go to theforgecommunity.com/arktutorial.php for more info.")
+      .addField("Ark: *theforgeark.com*", "go to theforgecommunity.com/arktutorial.php for more info.")
 
       message.channel.send({embed});
+
   } else if (message.content.startsWith(prefix + "dick")) {
     const embed = new Discord.RichEmbed()
       .setAuthor("The Forge", bot.user.avatarURL)
@@ -103,8 +104,10 @@ bot.on('message', message => {
       .addField("Brandon", "8=====================================)")
       .setFooter("Pictures taken with ❤ by SkyForge | Contact them for more.")
       message.channel.send({embed});
+
   } else if (message.content.startsWith("hi theforge")) {
     message.reply('Hi!');
+
   } else if (message.content.startsWith(prefix + "welcome")) {
     console.log(message.author.username);
     if (message.author.username === "SkyForge") {
