@@ -1,0 +1,55 @@
+Staff Systems:
+	+ Mod chats and such
+	+ Ticket System
+		- Notifications when:
+			- Ticket is claimed by a staff member
+			- Ticket is closed
+		- Store when a Staff member completes a task to monitor activity
+	+ Official warps:
+		- ex: shop and things of the sort
+		
+		
+		
+Shops:
+	- dynamic server shops, where price is based on dememnd
+	- player shops where players can make their own stores
+	- Trade center, where players can upload unique items for other players to buy. (Similar to Auction House)
+	
+	
+	
+Crates:
+	- Basic:
+	- Rare:
+	- Legendary:
+	
+	
+
+Perks (Ranks):
+	- Drop parties
+	- Number of homes
+	- ability to set own warps
+	- Create warp signs
+	- Rename Items for free
+	- Color codes on signs
+	- /hat
+	- fly in lobby
+	- join when server is full
+	- Disguises (if possible)
+	- Emotes
+	- /chest (backpack)
+	- Access to different Crates
+	- Access to more Parkour courses
+	- Silk Spawners?
+	- /disenchant
+	- feature your warp for a specific ammount of time
+	
+	IF we decide "screw the eula":
+		- fly
+		- heal
+		- god
+		- /back
+		- playervaults
+		- sell crate keys
+		- sell crates
+		- sell in game currency
+		- kits
