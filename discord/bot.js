@@ -153,7 +153,7 @@ bot.on('message', message => {
           .setColor(0xffc342)
           .setDescription("**You have to specify the game you play.**")
           .setThumbnail(bot.user.avatarURL)
-          .addField("Games:", "!iplay ark\n!iplay battlefield\n!iplay csgo\n!iplay forhonor\n!iplay gta\n!iplay miscreated\n!iplay minecraft\n!iplay rust")
+          .addField("Games:", "!iplay ark\n!iplay battlefield\n!iplay csgo\n!iplay forhonor\n!iplay gmod\n!iplay gta\n!iplay miscreated\n!iplay minecraft\n!iplay rust")
           .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
           message.channel.send({embed});
       }
@@ -167,6 +167,10 @@ bot.on('message', message => {
         message.channel.send({embed});
       } else if (arr[1] === "forhonor") {
         var role = message.guild.roles.find("name", "For Honor");
+        member.addRole(role).catch(console.error);
+        message.channel.send({embed});
+      } else if (arr[1] === "gmod") {
+        var role = message.guild.roles.find("name", "Gmod");
         member.addRole(role).catch(console.error);
         message.channel.send({embed});
       } else if (arr[1] === "gta") {
