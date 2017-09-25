@@ -14,6 +14,9 @@ rm -rfv /home/_theforge/_servers/minecraft/survival/plugins/Skript/scripts/*
 cp -r /home/_theforge/_git/minecraft/scripts/global/* /home/_theforge/_servers/minecraft/lobby/plugins/Skript/scripts
 cp -r /home/_theforge/_git/minecraft/scripts/global/* /home/_theforge/_servers/minecraft/RPG/plugins/Skript/scripts
 cp -r /home/_theforge/_git/minecraft/scripts/global/* /home/_theforge/_servers/minecraft/survival/plugins/Skript/scripts
+cp -r /home/_theforge/_git/minecraft/jars/active/* /home/_theforge/_servers/minecraft/lobby
+cp -r /home/_theforge/_git/minecraft/jars/active/* /home/_theforge/_servers/minecraft/RPG
+cp -r /home/_theforge/_git/minecraft/jars/active/* /home/_theforge/_servers/minecraft/survival
 cp -r /home/_theforge/_git/minecraft/scripts/lobby/* /home/_theforge/_servers/minecraft/lobby/plugins/Skript/scripts
 cp -r /home/_theforge/_git/minecraft/scripts/RPG/* /home/_theforge/_servers/minecraft/RPG/plugins/Skript/scripts
 cp -r /home/_theforge/_git/minecraft/scripts/survival/* /home/_theforge/_servers/minecraft/survival/plugins/Skript/scripts
