@@ -1,5 +1,6 @@
 ﻿const Discord = require('discord.js');
 const fs = require('fs');
+const Gamedig = require('gamedig');
 const bot = new Discord.Client();
 const token = "MzQzMDU4MDU4MDg1NDAwNTc3.DGaHLw.0hMP87zUVPJ1QBHsntthhF1UbVY";
 const website = "**http://theforgecommunity.com/**";
@@ -65,6 +66,32 @@ bot.on('message', message => {
           .addField("Description:", "View minecraft server players", true)
           .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
           .setThumbnail(bot.user.avatarURL)
+          message.channel.send({embed});
+        }
+
+  } else if (message.content.startsWith(prefix + "debugarkonline")) {
+      str = message.content;
+      arr = str.split(" ");
+   
+      Gamedig.query({
+        type: 'arkse',
+        host: '158.69.123.74',
+        port: '7777'
+      }).then((state) => {
+        console.log(state);
+        online = state;
+      }).catch((error) => {
+        console.log("Server is offline");
+        online = 'none';
+      });
+    
+      if(!arr[1]) {
+        const embed = new Discord.RichEmbed()
+          .setAuthor("The Forge", bot.user.avatarURL)
+          .setColor(0xffc342)
+          .setDescription("Online Ark Players")
+          .addField("State:", online, true)
+          .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
           message.channel.send({embed});
         }
 
