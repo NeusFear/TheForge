@@ -51,23 +51,27 @@ bot.on('message', message => {
         .setThumbnail(bot.user.avatarURL)
         message.channel.send({embed});
     }
-    
+
       } else if (message.content.startsWith(prefix + "debugarkonline")) {
       str = message.content;
       arr = str.split(" ");
-   
+
       Gamedig.query({
         type: 'arkse',
         host: 'theforgeark.com',
         port: '7777'
       }).then((state) => {
         console.log(state);
+        console.log("THIS: " + state.maxplayers)
+        console.log("THIS: " + state.players)
+        console.log("THIS: " + state.players.name)
+        console.log("THIS: " + state.players.name.toString())
         if(!arr[1]) {
         const embed = new Discord.RichEmbed()
           .setAuthor("The Forge", bot.user.avatarURL)
           .setColor(0xffc342)
-          .setDescription("Online Ark Players: " + maxplayers + " / " + players.length)
-          .addField("State:", players, true)
+          .setDescription("Online Ark Players: " + state.maxplayers + " / " + players.length)
+          .addField("State:", state.players.name.toString(), true)
           .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
           message.channel.send({embed});
         }
@@ -237,7 +241,7 @@ bot.on('message', message => {
     } else {
         const embed = new Discord.RichEmbed()
           .setColor(0xffc342)
-          .setDescription("I dont regognise that command, use ``!help`` for a list of my commands.")
+          .setDescription("I dont recognise that command, use ``!help`` for a list of my commands.")
           .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
           message.channel.send({embed});
     }
