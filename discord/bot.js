@@ -62,21 +62,27 @@ bot.on('message', message => {
         port: '7777'
       }).then((state) => {
         console.log(state);
-        var online = state;
-      }).catch((error) => {
-        console.log("Server is offline");
-        var online = 'none';
-      });
-    
-      if(!arr[1]) {
+        if(!arr[1]) {
         const embed = new Discord.RichEmbed()
           .setAuthor("The Forge", bot.user.avatarURL)
           .setColor(0xffc342)
           .setDescription("Online Ark Players")
-          .addField("State:", online, true)
+          .addField("State:", players, true)
           .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
           message.channel.send({embed});
         }
+      }).catch((error) => {
+        console.log("Server is offline");
+        if(!arr[1]) {
+        const embed = new Discord.RichEmbed()
+          .setAuthor("The Forge", bot.user.avatarURL)
+          .setColor(0xffc342)
+          .setDescription("Online Ark Players")
+          .addField("State:", "No online players...", true)
+          .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
+          message.channel.send({embed});
+        }
+      });
 
     } else if (message.content.startsWith(prefix + "list")) {
       str = message.content;
