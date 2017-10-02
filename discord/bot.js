@@ -77,8 +77,7 @@ bot.on('message', message => {
         const embed = new Discord.RichEmbed()
           .setAuthor("The Forge", bot.user.avatarURL)
           .setColor(0xffc342)
-          .setDescription("Online Ark Players: " + maxplayers + " / " + players.length)
-          .addField("State:", "No online players...", true)
+          .setDescription("No online players...")
           .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
           message.channel.send({embed});
         }
