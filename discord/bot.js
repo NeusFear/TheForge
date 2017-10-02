@@ -31,31 +31,14 @@ bot.on('message', message => {
       .setAuthor("The Forge", bot.user.avatarURL)
       .setColor(0xffc342)
       .setDescription("This is a list of commands I can do:")
-      .addField("Commands:", "!help\n!ping\n!info\n!website\n!invite\n!listmc\n!iplay", true)
-      .addField("Description:", "Displays the help menu.\nPong!\nDisplays the info Field.\nView a link to our website.\nGet an invite link.\nView minecraft server players\nAdds game roles **!iplay** for more info.", true)
+      .addField("Commands:", "!help\n!ping\n!info\n!website\n!invite\n!online\n!iplay", true)
+      .addField("Description:", "Displays the help menu.\nPong!\nDisplays the info Field.\nView a link to our website.\nGet an invite link.\nView players on our servers.\nAdds game roles **!iplay** for more info.", true)
       .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
       .setThumbnail(bot.user.avatarURL)
 
       message.channel.send({embed});
-  } else if (message.content.startsWith(prefix + "online")) {
-    str = message.content;
-    arr = str.split(" ");
-    if(!arr[1]) {
-      const embed = new Discord.RichEmbed()
-        .setAuthor("The Forge", bot.user.avatarURL)
-        .setColor(0xffc342)
-        .setDescription("Servers you can view players on")
-        .addField("Commands:", "!online mc", true)
-        .addField("Description:", "View minecraft server players", true)
-        .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
-        .setThumbnail(bot.user.avatarURL)
-        message.channel.send({embed});
-    }
 
-      } else if (message.content.startsWith(prefix + "debugarkonline")) {
-      str = message.content;
-      arr = str.split(" ");
-
+  } else if (message.content.startsWith(prefix + "online ark")) {
       Gamedig.query({
         type: 'arkse',
         host: 'theforgeark.com',
@@ -64,47 +47,47 @@ bot.on('message', message => {
         console.log(state);
         var players = state.players;
         console.log("\n" + players + "\n");
+        var list = [];
         for(var name in players) {
-          console.log(state[name]);
+          console.log(players[name].name);
+          list.push(players[name].name);
         }
 
-        if(!arr[1]) {
-        const embed = new Discord.RichEmbed()
-          .setAuthor("The Forge", bot.user.avatarURL)
-          .setColor(0xffc342)
-          .setDescription("Online Ark Players: " + state.maxplayers + " / " + players.length)
-          .addField("State:", state.players.name.toString(), true)
-          .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
-          message.channel.send({embed});
+        if(list.length > 0) {
+          const embed = new Discord.RichEmbed()
+            .setAuthor("The Forge", bot.user.avatarURL)
+            .setColor(0xffc342)
+            .setDescription("Online Ark Players: " + list.length + " / " + state.maxplayers)
+            .addField("Online:", list.toString(), true)
+            .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
+            message.channel.send({embed});
+        } else {
+          const embed = new Discord.RichEmbed()
+            .setAuthor("The Forge", bot.user.avatarURL)
+            .setColor(0xffc342)
+            .setDescription("No online players...")
+            .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
+            message.channel.send({embed});
         }
+
       }).catch((error) => {
-        console.log("Server is offline");
-        if(!arr[1]) {
-        const embed = new Discord.RichEmbed()
-          .setAuthor("The Forge", bot.user.avatarURL)
-          .setColor(0xffc342)
-          .setDescription("No online players...")
-          .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
-          message.channel.send({embed});
-        }
+        console.log(error);
       });
 
-    } else if (message.content.startsWith(prefix + "list")) {
-      str = message.content;
-      arr = str.split(" ");
-      if(!arr[1]) {
-        const embed = new Discord.RichEmbed()
-          .setAuthor("The Forge", bot.user.avatarURL)
-          .setColor(0xffc342)
-          .setDescription("Servers you can view players on")
-          .addField("Commands:", "!list mc", true)
-          .addField("Description:", "View minecraft server players", true)
-          .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
-          .setThumbnail(bot.user.avatarURL)
-          message.channel.send({embed});
-        }
-
-
+  } else if (message.content.startsWith(prefix + "online")) {
+    str = message.content;
+    arr = str.split(" ");
+    if(!arr[1]) {
+      const embed = new Discord.RichEmbed()
+        .setAuthor("The Forge", bot.user.avatarURL)
+        .setColor(0xffc342)
+        .setDescription("Servers you can view players on")
+        .addField("Commands:", "!online mc\n!online ark", true)
+        .addField("Description:", "View minecraft server players\nView ark server players", true)
+        .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
+        .setThumbnail(bot.user.avatarURL)
+        message.channel.send({embed});
+    }
 
   } else if (message.content.startsWith(prefix + "info")) {
     const embed = new Discord.RichEmbed()
