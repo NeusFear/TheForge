@@ -62,10 +62,11 @@ bot.on('message', message => {
         port: '7777'
       }).then((state) => {
         console.log(state);
-        console.log("THIS: " + state.maxplayers)
-        console.log("THIS: " + state.players)
-        console.log("THIS: " + state.players.name)
-        console.log("THIS: " + state.players.name.toString())
+        var info = state;
+        console.log("THIS: " + info.maxplayers)
+        console.log("THIS: " + info.players.toString();)
+        console.log("THIS: " + info.players.name.toString();)
+        console.log("THIS: " + info.players.name)
         if(!arr[1]) {
         const embed = new Discord.RichEmbed()
           .setAuthor("The Forge", bot.user.avatarURL)
