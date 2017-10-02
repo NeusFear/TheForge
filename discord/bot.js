@@ -1,11 +1,10 @@
 ﻿const Discord = require('discord.js');
 const fs = require('fs');
+const Gamedig = require('gamedig');
 const bot = new Discord.Client();
 const token = "MzQzMDU4MDU4MDg1NDAwNTc3.DGaHLw.0hMP87zUVPJ1QBHsntthhF1UbVY";
 const website = "**http://theforgecommunity.com/**";
 const prefix = "!";
-
-
 
 function includes(k) {
   for(var i=0; i < this.length; i++){
@@ -52,6 +51,37 @@ bot.on('message', message => {
         .setThumbnail(bot.user.avatarURL)
         message.channel.send({embed});
     }
+    
+      } else if (message.content.startsWith(prefix + "debugarkonline")) {
+      str = message.content;
+      arr = str.split(" ");
+   
+      Gamedig.query({
+        type: 'arkse',
+        host: 'theforgeark.com',
+        port: '7777'
+      }).then((state) => {
+        console.log(state);
+        if(!arr[1]) {
+        const embed = new Discord.RichEmbed()
+          .setAuthor("The Forge", bot.user.avatarURL)
+          .setColor(0xffc342)
+          .setDescription("Online Ark Players: " + maxplayers + " / " + players.length)
+          .addField("State:", players, true)
+          .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
+          message.channel.send({embed});
+        }
+      }).catch((error) => {
+        console.log("Server is offline");
+        if(!arr[1]) {
+        const embed = new Discord.RichEmbed()
+          .setAuthor("The Forge", bot.user.avatarURL)
+          .setColor(0xffc342)
+          .setDescription("No online players...")
+          .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
+          message.channel.send({embed});
+        }
+      });
 
     } else if (message.content.startsWith(prefix + "list")) {
       str = message.content;
@@ -67,6 +97,8 @@ bot.on('message', message => {
           .setThumbnail(bot.user.avatarURL)
           message.channel.send({embed});
         }
+
+
 
   } else if (message.content.startsWith(prefix + "info")) {
     const embed = new Discord.RichEmbed()
@@ -202,6 +234,12 @@ bot.on('message', message => {
             message.channel.send({embed});
         }
       }
+    } else {
+        const embed = new Discord.RichEmbed()
+          .setColor(0xffc342)
+          .setDescription("I dont regognise that command, use ``!help`` for a list of my commands.")
+          .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
+          message.channel.send({embed});
     }
 });
 
