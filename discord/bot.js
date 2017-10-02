@@ -66,7 +66,7 @@ bot.on('message', message => {
         const embed = new Discord.RichEmbed()
           .setAuthor("The Forge", bot.user.avatarURL)
           .setColor(0xffc342)
-          .setDescription("Online Ark Players")
+          .setDescription("Online Ark Players: " + maxplayers + " / " + players.length)
           .addField("State:", players, true)
           .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
           message.channel.send({embed});
@@ -77,7 +77,7 @@ bot.on('message', message => {
         const embed = new Discord.RichEmbed()
           .setAuthor("The Forge", bot.user.avatarURL)
           .setColor(0xffc342)
-          .setDescription("Online Ark Players")
+          .setDescription("Online Ark Players: " + maxplayers + " / " + players.length)
           .addField("State:", "No online players...", true)
           .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
           message.channel.send({embed});
@@ -235,6 +235,14 @@ bot.on('message', message => {
             message.channel.send({embed});
         }
       }
+    } else {
+        if(arr[1]){
+          const embed = new Discord.RichEmbed()
+            .setColor(0xffc342)
+            .setDescription("I dont regognise that command, use ``!help`` for a list of my commands.")
+            .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
+            message.channel.send({embed});
+        }
     }
 });
 
