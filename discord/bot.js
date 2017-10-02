@@ -1,12 +1,10 @@
 ﻿const Discord = require('discord.js');
 const fs = require('fs');
-const Gamedig = require('/gamedig/node-gmedig/bin/gamedig.js');
+const Gamedig = require('gamedig');
 const bot = new Discord.Client();
 const token = "MzQzMDU4MDU4MDg1NDAwNTc3.DGaHLw.0hMP87zUVPJ1QBHsntthhF1UbVY";
 const website = "**http://theforgecommunity.com/**";
 const prefix = "!";
-
-git@github.com:sonicsnes/node-gamedig.git
 
 function includes(k) {
   for(var i=0; i < this.length; i++){
@@ -64,10 +62,10 @@ bot.on('message', message => {
         port: '7777'
       }).then((state) => {
         console.log(state);
-        online = state;
+        var online = state;
       }).catch((error) => {
         console.log("Server is offline");
-        online = 'none';
+        var online = 'none';
       });
     
       if(!arr[1]) {
