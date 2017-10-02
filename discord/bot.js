@@ -1,12 +1,12 @@
 ﻿const Discord = require('discord.js');
 const fs = require('fs');
-const Gamedig = require('gamedig');
+const Gamedig = require('/gamedig/node-gmedig/bin/gamedig.js');
 const bot = new Discord.Client();
 const token = "MzQzMDU4MDU4MDg1NDAwNTc3.DGaHLw.0hMP87zUVPJ1QBHsntthhF1UbVY";
 const website = "**http://theforgecommunity.com/**";
 const prefix = "!";
 
-
+git@github.com:sonicsnes/node-gamedig.git
 
 function includes(k) {
   for(var i=0; i < this.length; i++){
@@ -53,6 +53,32 @@ bot.on('message', message => {
         .setThumbnail(bot.user.avatarURL)
         message.channel.send({embed});
     }
+    
+      } else if (message.content.startsWith(prefix + "debugarkonline")) {
+      str = message.content;
+      arr = str.split(" ");
+   
+      Gamedig.query({
+        type: 'arkse',
+        host: 'theforgeark.com',
+        port: '7777'
+      }).then((state) => {
+        console.log(state);
+        online = state;
+      }).catch((error) => {
+        console.log("Server is offline");
+        online = 'none';
+      });
+    
+      if(!arr[1]) {
+        const embed = new Discord.RichEmbed()
+          .setAuthor("The Forge", bot.user.avatarURL)
+          .setColor(0xffc342)
+          .setDescription("Online Ark Players")
+          .addField("State:", online, true)
+          .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
+          message.channel.send({embed});
+        }
 
     } else if (message.content.startsWith(prefix + "list")) {
       str = message.content;
