@@ -63,6 +63,7 @@ bot.on('message', message => {
       }).then((state) => {
         console.log(state);
         var players = state.players;
+        console.log("\n" + players + "\n");
         for(var name in players) {
           console.log(state[name]);
         }
