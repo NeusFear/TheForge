@@ -62,7 +62,8 @@ bot.on('message', message => {
         port: '7777'
       }).then((state) => {
         console.log(state);
-        for(var name in state) {
+        var players = state.players;
+        for(var name in players) {
           console.log(state[name]);
         }
 
