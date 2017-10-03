@@ -1,6 +1,39 @@
 ###############################
-# File sorting:											#
+# CSS:
 ###############################
+
+Light theme with shark corners and clean modern look, no media shown on home pages, only descriptions
+
+Homepage:
+	+ top bar with login and user's name
+	+ tabs with pages:
+		- Home
+		- News
+		- Forums (active)
+		- Community
+		- Profile
+
+Forum post preview information:
+	+ Profile picture of poster
+	+ name of poster
+	+ Title of post
+	+ description of post
+
+Profile Preview: (ttp)
+	+ Profile Picture
+	+ Status
+	+ Username
+	+ Nickname
+	+ Tags
+
+Profile Page:
+	+ I need to draw pictures for these I think...
+
+###############################
+# File sorting:
+###############################
+
+JSON BASED (not prefered, everything has to be stored in the http folder.)
 	/forums
 		/index.php
 		/topics
@@ -16,7 +49,81 @@
 					/banner.png
 					/uploads
 						/file.ext
+
+
+
+DATABASE (prefered)
+	/forums
+		/index.php
+		/media/userdata/<user>/ #These filepaths will be indexed with a database, nothing is stored in the database, when we get a hosted system then we will store this on a seperate drive, however only file paths will be stored in a database, for purpose of speed in indexing only, and to avoid the need of the machine to index things, a direct path is better
+			avatar.png
+			banner.png
+			/uploads/
+				<any upload>
+
+
+
+
+
 ###############################
 
 Things to Research:
-	- 
+	- Filestorage efficiency - index with database, execute from a filesystem
+	- userstorage - database
+	- forums storage - database
+
+###############################
+# Core Functions needed:
+###############################
+
+getRecentPosts(int ammt, int skip) :: array of post indexes:
+	- returns the specified number of recent posts, and skips spefified, default get 10 recent skip 0 (this feature is to load new and not all at once)
+getOnlineUsers(int ammt, string group)
+	- returns ammount of specified groupes users that are online
+getPostData(int index)
+	- returns a json object of the data of the post, this includes
+		+ poster
+		+ date Posted
+		+ Title of post
+		+ Description
+		+ tags
+		+ Category forum path, Ex: (Games > minecraft > our servers)
+		+ Body of post - in html format
+		+ array of file paths included in post
+getPostResponses(int ammt)
+	- returns array of jsondata for comments on the post, in time order including:
+		+ name of responder
+		+ time of response
+		+ body of response (unformatted, responses dont need html format, or attatchments)
+getPostLikes()
+	- returns array arr[0]=likes arr[1]=dislikes
+getUserData(int: userid)
+	- returns basic data about the user:
+		+ username
+		+ Name
+		+ Status
+		+ Path to Profile Picture
+		+ xp
+		+ Array of tag types
+			* arr[0] - Staff roles
+			* arr[1] - Donator Roles
+			* arr[2] - Given roles (helper, sexy, etc.)
+getProfileData(int: userid)
+	- returns all data about the specified user
+		+ username
+		+ Name
+		+ location
+		+ Discord ID
+		+ Steam ID
+		+ Origin ID
+		+ Minecraft Username
+		+ Status
+		+ Date Joined
+		+ Path to Profile Picture
+		+ Path to Banner
+		+ HTML format of profile home
+		+ xp
+		+ Array of tag types
+			* arr[0] - Staff roles
+			* arr[1] - Donator Roles
+			* arr[2] - Given roles (helper, sexy, etc.)
