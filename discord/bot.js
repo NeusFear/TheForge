@@ -16,9 +16,15 @@ function includes(k) {
 }
 
 bot.login(token);
+bot.user.setPresence({ status: 'online', game: { name: '!help for help.' } });
 
 bot.on('ready', () => {
   console.log('TheForge bot is now ready.');
+  message.guild.channels.find("logs", "TheForge").sendMessage("Bot Started");
+});
+
+bot.on('disconnect', () +> {
+  message.guild.channels.find("logs", "TheForge").sendMessage("Bot Stopped");
 });
 
 bot.on('message', message => {
