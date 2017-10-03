@@ -16,7 +16,6 @@ function includes(k) {
 }
 
 bot.login(token);
-bot.setPresence({ status: 'online', game: { name: '!help for help.' } });
 
 bot.on('ready', () => {
   console.log('TheForge bot is now ready.');
@@ -50,12 +49,9 @@ bot.on('message', message => {
         host: 'theforgeark.com',
         port: '7777'
       }).then((state) => {
-        console.log(state);
         var players = state.players;
-        console.log("\n" + players + "\n");
         var list = [];
         for(var name in players) {
-          console.log(players[name].name);
           list.push(players[name].name);
         }
 
