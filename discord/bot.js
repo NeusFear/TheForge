@@ -19,11 +19,23 @@ bot.login(token);
 
 bot.on('ready', () => {
   console.log('TheForge bot is now ready.');
-  message.guild.channels.find("logs", "TheForge").sendMessage("Bot Started");
+  const embed = new Discord.RichEmbed()
+    .setAuthor("The Forge", bot.user.avatarURL)
+    .setColor(0xffc342)
+    .setDescription("Bot Started")
+    .setThumbnail(bot.user.avatarURL)
+
+  message.guild.channels.find("logs", "TheForge").send({embed});
 });
 
 bot.on('disconnect', () => {
-  message.guild.channels.find("logs", "TheForge").sendMessage("Bot Stopped");
+    const embed = new Discord.RichEmbed()
+    .setAuthor("The Forge", bot.user.avatarURL)
+    .setColor(0xffc342)
+    .setDescription("Bot Stopped")
+    .setThumbnail(bot.user.avatarURL)
+
+  message.guild.channels.find("logs", "TheForge").send({embed});
 });
 
 bot.on('message', message => {
