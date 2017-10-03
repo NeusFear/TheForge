@@ -23,7 +23,7 @@ bot.on('ready', () => {
   message.guild.channels.find("logs", "TheForge").sendMessage("Bot Started");
 });
 
-bot.on('disconnect', () +> {
+bot.on('disconnect', () => {
   message.guild.channels.find("logs", "TheForge").sendMessage("Bot Stopped");
 });
 
