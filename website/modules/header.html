@@ -1,0 +1,10 @@
+<div id="header" class="header"><font color="#ffc342">THEFORGE</font></div>
+<script>
+  window.onload = function(){
+     var page = document.title;
+     var active = document.title.split(" - ");
+     var html1 = "<font color='#ffc342'>THEFORGE</font>";
+     var final = html1.concat(active[1]);
+     document.getElementById("header").innerHTML = final;
+  };
+</script>

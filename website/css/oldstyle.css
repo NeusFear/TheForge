@@ -1,0 +1,314 @@
+@font-face {
+    font-family: 'Big John';
+    src: url('../fonts/big_john-webfont.woff2') format('woff2'),
+         url('../fonts/big_john-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+  background-color: #282828;
+  height: 100%;
+  margin: 0px;
+  margin-top: 60px;
+  transition-duration: 0.5s;
+}
+main{
+  margin: 0px;
+  transition-duration: 0.5s;
+  padding: 10px 0px 0px 0px;
+}
+.flex{
+    display: flex;
+    width: 100%;
+    display: -webkit-flex;
+}
+.section{
+  width: auto;
+  display: block;
+}
+
+
+
+
+.content {
+  width: auto;
+  font-family: source sans pro;
+  background-color: #212121;
+  color: white;
+  padding: 0px 10px 0px 10px;
+  overflow: hidden;
+  opacity: 1;
+}
+.background {
+  position: fixed;
+  width: 100%;
+}
+p{
+  font-size: 26;
+}
+.info {
+  height: auto;
+  text-align: center;
+  font-family: Big John;
+  font-size: 24px;
+  color: #ffc342;
+  float: left;
+  width: 33%;
+  margin: auto;
+  -webkit-flex: 1;  /* Safari 6.1+ */
+  -ms-flex: 1;  /* IE 10 */
+  flex: 1;
+}
+.info img{
+  height: 200px;
+  width: 200px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: fill;
+  border-radius: 100px;
+}
+.info p{
+  height: auto;
+  text-align: center;
+  font-family: Big John;
+  font-size: 14px;
+  color: #999999;
+}
+
+.connect {
+  min-height: 600px;
+  text-align: left;
+  padding-top: 40px;
+  font-family: Big John;
+  font-size: 50px;
+  border-top: 5px solid;
+  border-color: #ffc342;
+  background-color: #f2f2f2;
+  color: #999999;
+  margin-bottom: 35px;
+  width: 100%;
+  float: left;
+}
+.connect p{
+  margin-left: 25%;
+  margin-right: 25%;
+  height: auto;
+  margin-bottom: 0px;
+  padding-bottom: 100px;
+}
+.connect img{
+  margin-bottom: 24px;
+}
+.header{
+  font-family: Big John;
+  background-color: black;
+  position: fixed;
+  padding-top: 20px;
+  padding-left: 230px;
+  margin-left: -200px;
+  margin-bottom: 42px;
+  margin-top: -60px;
+  text-align: left;
+  overflow: hidden;
+  width: 100%;
+  height: 60px;
+  color: white;
+  font-size: 42px;
+  transition-duration: 0.5s;
+  z-index: 2;
+  border-bottom: 5px solid;
+  border-color: #ffc342;
+}
+.splash{
+  overflow: hidden;
+  font-family: Big John;
+  font-size: 100px;
+  text-align: left;
+  padding-top: 20px;
+  padding-left: 230px;
+  margin-left: 15%;
+  margin-bottom: 42px;
+  margin-top: -60px;
+  width: auto;
+  height: auto;
+  color: white;
+  background:rgba(0,0,0,0.85);
+}
+.splash-left{
+  overflow: hidden;
+  font-family: Big John;
+  font-size: 100px;
+  text-align: right;
+  padding-top: 35px;
+  padding-bottom: 35px;
+  padding-right: 230px;
+  margin-right: 15%;
+  margin-bottom: 42px;
+  margin-top: -60px;
+  width: auto;
+  height: auto;
+  color: white;
+  background:rgba(0,0,0,0.85);
+}
+.transition{
+  height: 1300px;
+  text-align: center;
+  padding-top: 80px;
+  padding-left: 0px;
+  font-family: Big John;
+  font-size: 20px;
+  background-color: #f2f2f2;
+  color: #999999;
+}
+.transition p{
+  margin-left: 25%;
+  margin-right: 25%;
+  height: auto;
+  margin-bottom: 0px;
+  padding-bottom: 100px;
+}
+.transition img{
+  margin-bottom: 24px;
+}
+.nav{
+  overflow: hidden;
+  color: #ffc342;
+  background-color: black;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  z-index: 2;
+  text-align: center;
+}
+.pages{
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px 0px 10px 0px;
+  font-size: 20px;
+}
+
+
+button{
+  background-color: #ffc342;
+  color: white;
+  border: 4px solid;
+  border-color: #ffc342;
+  transition-duration: 0.25s;
+  font-size: 30px;
+  font-family: Big John;
+  padding: 10px;
+}
+button:hover{
+  background-color: #ffc342;
+  color: white;
+  border: 4px solid;
+  border-color: white;
+}
+input.submit{
+  background-color: #ffc342;
+  color: white;
+  border: 4px solid;
+  border-color: #ffc342;
+  transition-duration: 0.25s;
+  font-size: 30px;
+  font-family: Big John;
+  padding: 10px;
+}
+input.submit:focus{
+  background-color: #ffc342;
+  color: white;
+  border: 4px solid;
+  border-color: white;
+}
+.navbutton{
+  padding: 10px 0px 10px 0px;
+  font-size: 20px;
+  border: none;
+  background: transparent;
+  width: 50px;
+  color: #ffc342;
+}
+
+
+.mobilebreaks{
+  display: none;
+}
+
+
+
+
+.parallax {
+  transition-duration: .25s;
+  text-align: center;
+  padding-top: 300px;
+  color: white;
+  font-family: Big John;
+
+  position: relative;
+  opacity: 1;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  background-image: url("../images/temp.png");
+  min-height: 300px;
+
+}
+
+/* Turn off parallax scrolling for tablets and phones.*/
+@media only screen and (max-device-width: 1024px) {
+    .parallax {
+        background-attachment: scroll;
+    }
+    .transition{
+      height: 7500px;
+    }
+    #communitytransition {
+      height: 3750px;
+    }
+    .transition p{
+      font-size: 48px;
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+    .splash{
+      margin-left: 0px;
+      text-align: center;
+      padding-left: 0px;
+      margin-left: -0px;
+    }
+    .splash-left{
+      margin-right: 0px;
+      text-align: center;
+      padding-left: 0px;
+      margin-left: -0px;
+    }
+    .info {
+      font-size: 72px;
+      width: 100%;
+    }
+    .info img{
+      height: 600px;
+      width: 600px;
+      border-radius: 300px;
+    }
+    .info p{
+      font-size: 42px;
+    }
+    .mobilebreaks{
+      display: block;
+    }
+    .nav{
+      padding-left: 40%;
+    }
+    .navbutton {
+      font-size: 60px;
+    }
+    .pages {
+      font-size: 60px;
+    }
+
+}
