@@ -30,7 +30,7 @@
     <?php include 'modules/navbar.html'?>
     <br><br>
     <?php include 'modules/forumsinfo.html'?>
-    <?php include 'modules/forumsgeneral.html'?>
-    <?php include 'modules/forumsgaming.html'?>
-    <?php include 'modules/forumsofftopic.html'?>
+    <?php include 'modules/forumsgeneral.php'?>
+    <?php include 'modules/forumsgaming.php'?>
+    <?php include 'modules/forumsofftopic.php'?>
    </body>
