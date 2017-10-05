@@ -52,6 +52,7 @@ input.navbutton{
   font-size: 20px;
   border: none;
   padding: 14px;
+  transition: box-shadow .6s;
 }
 input.navbutton:hover{
   color: black;
@@ -64,32 +65,36 @@ input.navbutton:hover{
   padding: 14px;
 }
 div.columns {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 div.columns span {
-    display: table-cell;
-    text-align: center;
+  display: table-cell;
+  text-align: center;
 }
 .category{
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    width: auto;
-    margin-left: 0%;
-    margin-right: 5%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding-left: 40px;
+  padding-right: 5%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transition-duration: .7s;
+}
+.category:hover{
+  background-color: #f7f7f7;
+  transition-duration: .7s;
 }
 .categorytitle{
-    margin-top: -20px;
-    margin-bottom: 15px;
-    font-family: Big John;
+  margin-top: -20px;
+  margin-bottom: 15px;
+  font-family: Big John;
+  color: #474747;
+  transition-duration: .7s;
 }
 .category p{
-    color: #a0a0a0;
-    margin: 0px;
+  color: #a0a0a0;
+  margin: 0px;
 }
 
 
