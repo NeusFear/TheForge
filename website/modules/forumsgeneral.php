@@ -2,5 +2,6 @@
   <div class="contentheader"><img src="images/Icons/general/171-folder-3.png" style="width:28px;height:28px;"> GENERAL</div>
   <p>
     <?php include 'category.php'?>
+    <?php include 'lockedcategory.php'?>
   </p>
 </div>
