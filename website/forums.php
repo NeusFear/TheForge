@@ -24,12 +24,20 @@
   </head>
 
   <body id="root">
-    <?php include 'modules/header.html'?>
-    <br>
-    <?php include 'modules/navbar.html'?>
-    <br><br>
-    <?php include 'modules/forumsinfo.html'?>
-    <?php include 'modules/forumsgeneral.php'?>
-    <?php include 'modules/forumsgaming.php'?>
-    <?php include 'modules/forumsofftopic.php'?>
+    <?php
+    if(isset($_GET["category"])) {
+      $location = explode(',', $_GET["category"]);
+      $url = 'forums/categories/' . $location[0] . '/' . $location[1] . '.php';
+      include $url;
+    } else {
+      include 'modules/header.html';
+      echo '<br>';
+      include 'modules/navbar.html';
+      echo '<br><br>';
+      include 'modules/forumsinfo.html';
+      include 'modules/forumsgeneral.php';
+      include 'modules/forumsgaming.php';
+      include 'modules/forumsofftopic.php';
+    }
+    ?>
    </body>
