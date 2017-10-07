@@ -53,7 +53,9 @@ input.navbutton{
   border: none;
   padding: 14px;
   transition: box-shadow .6s;
-  border-radius: 0px;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -webkit-appearance: none;
 }
 input.navbutton:hover{
   color: black;
