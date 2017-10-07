@@ -53,6 +53,7 @@ input.navbutton{
   border: none;
   padding: 14px;
   transition: box-shadow .6s;
+  border-radius: 0px;
 }
 input.navbutton:hover{
   color: black;

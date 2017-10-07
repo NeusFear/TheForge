@@ -4,7 +4,7 @@
     <?php
     $directory = 'forums/categories/general/';
     $category = array_diff(scandir($directory), array('..', '.'));
-    $rootcategory = 'offtopic';
+    $rootcategory = 'general';
     foreach ($category as $value) {
       $arr = explode(".", $value);
       $name = $arr[0];
