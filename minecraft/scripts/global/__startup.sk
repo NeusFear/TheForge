@@ -9,6 +9,22 @@ on skript load:
 		set {_server} to "Survival"
 	if {_server} is "rpg":
 		set {_server} to "Secret"
-	set desc of embed "start" to "%{_server}% Server Started"
+	set desc of embed "start" to "The %{_server}% Server Started"
 	set footer of embed "start" to "%now%"
 	send embed "start" to channel "343419389477126155" with "TheForge"
+	clear embed "start"
+
+on server stop:
+	set {_server} to server()
+	make embed "stop"
+	set color of embed "stop" to "GREEN"
+	if {_server} is "lobby":
+		set {_server} to "Lobby"
+	if {_server} is "survival":
+		set {_server} to "Survival"
+	if {_server} is "rpg":
+		set {_server} to "Secret"
+	set desc of embed "stop" to "The %{_server}% Server Stopped"
+	set footer of embed "stop" to "%now%"
+	send embed "stop" to channel "343419389477126155" with "TheForge"
+	clear embed "stop"

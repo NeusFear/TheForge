@@ -1,3 +1,6 @@
+options:
+	configs: 
+
 function getUUID(player: text) :: text:
 	return {pd.playerdata::%{_player}%::uuid}
 
