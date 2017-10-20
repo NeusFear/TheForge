@@ -218,12 +218,12 @@ function timespan(second: integer) :: string:
 
 
 	return "%{_yeart}%%{_montht}%%{_weekt}%%{_dayt}%%{_hourst}%%{_mint}%%{_secondt}%"
-	
+
 function getprice(type: text , item: text) :: number:
 	$thread
 	set {_price} to skutil yaml value "%{_type}%.%{_item}%" from file "pricelist.yml" #this needs to be created in a data file
 	return {_price}
-	
+
 
 function getIP(player: text , history: text = "none") :: texts:
 	set {_uuid} to getUUID("%{_player}%")
@@ -382,34 +382,6 @@ function rankMsg(rank: text , and: text , text: text):
 			if rank("%{_uuid}%" , "is" , "%{_rank}%") is "true":
 				send "&8* %{_prefix}% &f: &7%{_text}%" to loop-player
 
-function isWhitelisted(player: text) :: boolean:
-	set {_uuid} to getUUID("%{_player}%")
-	loop {cd.whitelist::white::perm::*}:
-		if "%{_uuid}%" is "%loop-value%":
-			return true
-			stop
-	loop {cd.whitelist::white::temp::*}:
-		if "%{_player}%" is "%loop-value%":
-			remove {_player} from {cd.whitelist::white::temp::*}
-			add {_uuid} to  {cd.whitelist::white::perm::*}
-			return true
-			stop
-	return false
-
-function isGraylisted(player: text) :: boolean:
-	set {_uuid} to getUUID("%{_player}%")
-	loop {cd.whitelist::gray::perm::*}:
-		if "%{_uuid}%" is "%loop-value%":
-			return true
-			stop
-	loop {cd.whitelist::gray::temp::*}:
-		if "%{_player}%" is "%loop-value%":
-			remove {_player} from {cd.whitelist::gray::temp::*}
-			add {_uuid} to  {cd.whitelist::gray::perm::*}
-			return true
-			stop
-	return false
-
 function statistics(player: text , stat: text , action: text , ammount: integer = 1) :: text:
 	set {_uuid} to getUUID("%{_player}%")
 	if {_stat} is "joins" or "join":
@@ -536,26 +508,6 @@ function joinMsg(p: text):
 
 function playerJoin(p: player):
 	set {_uuid} to uuid of {_p}
-	if {cd.whitelist} is true:
-		if isWhitelisted("%{_p}%") is false:
-			if isGraylisted("%{_p}%") is false:
-				wait 20 ticks
-				kick {_p} due to "&7[&6The Forge&7] %nl%&fThis is SkyForge's Developer Server%nl%&fYou're not whitelisted nor graylisted"
-				rankMsg("moderator" , "+" , "%{_p}% was kicked from the server, because they're not whitelisted")
-				stop
-			else:
-				loop all players:
-					if rank("%uuid of loop-player%" , "is" , "admin") is "true":
-						joinMsg("%{_p}%")
-						wait a second
-						updatePlayer({_p})
-						statistics("%{_p}%" , "join" , "add")
-						send sucessMsg("You were allowed into the server because you're on a greylist and an &4Administrator &ais Online") to {_p}
-						stop
-				wait 20 ticks
-				kick {_p} due to "&7[&6The Forge&7] %nl%&fThis is SkyForge's Developer Server%nl%&fYou're not allowed unless an &4Administrator&f is online."
-				rankMsg("moderator" , "+" , "%{_p}% was kicked from the server, because there are no Admins online")
-				stop
 	joinMsg("%{_p}%")
 	wait a second
 	updatePlayer({_p})
@@ -563,10 +515,6 @@ function playerJoin(p: player):
 
 function playerLeave(p: player):
 	set {_uuid} to getUUID("%{_p}%")
-	if {cd.whitelist} is true:
-		if isWhitelisted("%{_p}%") is false:
-			if isGraylisted("%{_p}%") is false:
-				stop
 	set {_rank} to rank("%{_uuid}%" , "get" , "highest")
 	set {_prefix} to prefix("%{_rank}%")
 	broadcast "&4* %{_prefix}%%{_p}% &7Left &6The Forge&f."
