@@ -22,7 +22,16 @@ bot.on('ready', () => {
 });
 
 bot.on('disconnect', () => {
-  console.log('Bot Stopped')
+    const embed = new Discord.RichEmbed()
+      .setAuthor("The Forge", bot.user.avatarURL)
+      .setColor(0xffc342)
+      .setDescription("This is a list of commands I can do:")
+      .addField("Commands:", "!help\n!ping\n!info\n!website\n!invite\n!online\n!iplay", true)
+      .addField("Description:", "Displays the help menu.\nPong!\nDisplays the info Field.\nView a link to our website.\nGet an invite link.\nView players on our servers.\nAdds game roles **!iplay** for more info.", true)
+      .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
+      .setThumbnail(bot.user.avatarURL)
+
+    message.guild.channels.find("name", "logs").send({embed});
 });
 
 bot.on('message', message => {
