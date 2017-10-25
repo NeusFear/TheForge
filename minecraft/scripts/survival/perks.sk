@@ -1,0 +1,20 @@
+command /rename [<text>]:
+  trigger:
+    if arg 1 is set:
+      if rank("%uuid of player%", "is", "moderator", "+") is "true":
+        if player's held item is set:
+          set name of player's held item to "%arg 1%"
+          send warnMsg("Item renamed.")
+        else:
+          send errorMsg("You're not holding an item.")
+      else:
+        send errorMsg("You don't have permission to use this command, consider donating, it's a perk!")
+    else:
+      if rank("%uuid of player%", "is", "moderator", "+") is "true":
+        if player's held item is set:
+          set name of player's held item to "%type of player's held item%"
+          send warnMsg("Tool name reset.")
+        else:
+          send errorMsg("You're not holding an item.")
+      else:
+        send errorMsg("You don't have permission to use this command, consider donating, it's a perk!")
