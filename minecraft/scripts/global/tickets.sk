@@ -1,0 +1,6 @@
+command /ticket [<text>] [<text>] [<text>]:
+  trigger:
+    if arg 1 is set:
+      send errorMsg("Not yet implemented")
+    else:
+      send help("tickets")
