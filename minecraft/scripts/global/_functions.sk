@@ -550,3 +550,19 @@ function randomChar(arg: integer = 1) :: text:
 		add {_char} to {_return::*}
 	set {_return} to "%join {_return::*} with """"%"
 	return {_return}
+	
+function help(type: text = "all" , includestaff: boolean = false) :: text:
+	if {_type} is "all":
+		add "tickets" to {_types::*}
+		loop {_types::*}:
+			set {_return} to "&6Help &7menus Include: &f%{_types}%"
+			replace all "," with "&7,&f" in {_return}
+	else if {_type} is "tickets":
+		set {_return} to "&f/ticket new <description> &7- Creates a new ticket at your location. Describe your problem thoroughly.%nl%&f/ticket view <id> &7- views the given ticket id (You're given a ticket id on creation)%nl%&f/ticket list <me/open/recent/all> &7- Views your, recent, open, or all tickets and their id's%nl%&f/ticket close <id> <reason> &7- Close a ticket you've opened with a reason."
+		if {_includestaff} is true:
+			set {_return} to "%{_return}%&cStaff can close any ticket.%nl%"
+		set {_return} to "%{_return}%&f/ticket comment <id> <response> &7- add a comment to your ticket.%nl%"
+		if {_includestaff} is true:
+			set {_return} to "%{_return}%&c/ticket solve <id> <message> &c- Closes a ticket with a solved status. leave a message to be displayed to the ticket creator."
+	else:
+		return errorMsg("Unknown help query")
