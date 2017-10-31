@@ -65,7 +65,14 @@ DATABASE (prefered)
 			banner.png
 			/uploads/
 				<any upload>
-
+	
+	User Storage:
+		- Users are stored in the website database on the 'forumusers' table
+		rows sorted like this:
+			usreindex username firstname lastname location discordid status join_date profile_image_path banner_path profile_home_html xp staff_roles(string seperated by ',' split on parse) donator_roles(string seperated by ',' split on parse) other_roles(string seperated by ',' split on parse)
+			
+	Forums Storage: 
+		- web pages are stored in the website databse on the 'forumposts' table
 
 
 
