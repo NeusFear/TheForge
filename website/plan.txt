@@ -109,8 +109,8 @@ getPostData(int index)
 		+ tags
 		+ Category forum path, Ex: (Games > minecraft > our servers)
 		+ Body of post - in html format
-		+ array of file paths included in post
-		+ pinned - (puth the post in the top of it's category in the pinned section)
+		- array of file paths included in post (use hrefs in html format)
+		+ type - pinned(include in top of category section), important(marked with a tag to draw emphasis by staff), help(marked by a user that needs help), normal
 getPostResponses(int ammt)
 	- returns array of jsondata for comments on the post, in time order including:
 		+ name of responder
