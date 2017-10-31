@@ -1,7 +1,7 @@
 Users:
 - name: website pass: Eu72pGF2Sd
 Databases:
-- name: website pass: Mc2g33463!
+- name: website pass: Mc2g33463! pass_from_website_user: Eu72pGF2Sd
 
 ###############################
 # CSS:
