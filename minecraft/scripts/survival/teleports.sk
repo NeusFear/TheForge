@@ -1,0 +1,9 @@
+command /play:
+	trigger:
+		set {_world} to "Overworld1" parsed as world
+		set {_x} to a random integer from -5000 to 5000
+		set {_z} to a random integer from -5000 to 5000
+		set {_location} to location({_x}, 0, {_z}, {_world})
+		send warnMsg("Teleporting...")
+		teleport player to highest block at {_location}
+		send warnMsg("Teleported to %location of player%")

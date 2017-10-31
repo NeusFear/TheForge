@@ -1,0 +1,10 @@
+command /createsurvivalworld <text>:
+	trigger:
+		if rank("%uuid of player%", "is", "admin") is "true":
+			send warnMsg("Creating Generator...")
+			set {_creator} to creator named "%arg 1%"
+			send warnMsg("Creating World...")
+			create world using {_creator}
+			send warnMsg("World Created.")
+		else:
+			send errorMsg("You dont have permission to execute this command")

@@ -1,7 +1,7 @@
 command /ping:
 	trigger:
 		send warnMsg("Your ping is: &f%player's ping%")
-
+		
 command /plugins:
 	trigger:
 		set {_var::*} to directory "plugins/Skript/scripts/"'s files
@@ -165,6 +165,10 @@ command /warps:
 command /warp [<text>]:
 	trigger:
 		if arg 1 is set:
+			if arg 1 is "spawn":
+				teleport player to {id.warps::%arg 1%}
+				send sucessMsg("Welcome back to the spawn")
+				stop
 			if {id.warps::%arg 1%} is set:
 				teleport player to {id.warps::%arg 1%}
 				send sucessMsg("Teleporting to %arg 1%...")
@@ -172,3 +176,9 @@ command /warp [<text>]:
 				send errorMsg("The warp %arg 1% doesn't exist")
 		else:
 			send errorMsg("Please specify the warp you want to teleport to. A list can be found with &f/warps")
+command /spawn:
+	trigger:
+		make player execute "/warp spawn"
+on first join:
+	teleport player to {id.warps::newbies}
+	send warnMsg("Welcome to &6TheForge")
