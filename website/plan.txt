@@ -69,12 +69,12 @@ DATABASE (prefered)
 	User Storage:
 		- Users are stored in the website database on the 'forumusers' table
 		rows sorted like this:
-			usreindex username firstname lastname location discordid status join_date profile_image_path banner_path profile_home_html xp staff_roles(string seperated by ',' split on parse) donator_roles(string seperated by ',' split on parse) other_roles(string seperated by ',' split on parse)
+			userindex username email password recieve_updates(bool) firstname lastname location discordid status join_date profile_image_path banner_path profile_home_html xp staff_roles(string seperated by ',' split on parse) donator_roles(string seperated by ',' split on parse) other_roles(string seperated by ',' split on parse)
 			
 	Forums Storage: 
 		- web pages are stored in the website databse on the 'forumposts' table
 		rows sorted like this:
-			post_index date_posted userid posthtml type(pinned[staff] important[staff] help[users] normal[users]) category responses(likes,dislikes)[split on parse] html_content 
+			post_index date_posted date_modified(changed on post_update and replyaddition) userid posthtml type(pinned[staff] important[staff] help[users] normal[users]) category responses(likes,dislikes)[split on parse] html_content 
 			
 		
 	Reply Storage:
@@ -96,55 +96,18 @@ Things to Research:
 # Core Functions needed:
 ###############################
 
-getRecentPosts(int ammt, int skip) :: array of post indexes:
-	- returns the specified number of recent posts, and skips spefified, default get 10 recent skip 0 (this feature is to load new and not all at once)
-getOnlineUsers(int ammt, string group)
-	- returns ammount of specified groupes users that are online
+getRecentPosts(string query, int ammt) :: array of post indexes query'd by (query argument):
+	- returns forum posts
+		+ query (date_modified date_posted[aka new] likes[most likes] tag_{any tag type[split on parse at '_']})
+		+ ammount (number of querys to display[clear loded querys on 'load_more' and re-show them with new argument]) (default: 10)
+getUsers(string status, string group, int ammount)
+	- returns online users:
+		+ status (onilne, offline, all)
+		+ group (any tag)
+		+ ammount (integer for number of returned users)
 getPostData(int index)
-	- returns a json object of the data of the post, this includes
-		+ poster
-		+ date Posted
-		+ Title of post
-		+ Description
-		+ tags
-		+ Category forum path, Ex: (Games > minecraft > our servers)
-		+ Body of post - in html format
-		- array of file paths included in post (use hrefs in html format)
-		+ type - pinned(include in top of category section), important(marked with a tag to draw emphasis by staff), help(marked by a user that needs help), normal
+	- returns an object of the data of the post, (see mysql data for returned data)
 getPostResponses(int ammt)
-	- returns array of jsondata for comments on the post, in time order including:
-		+ name of responder
-		+ time of response
-		+ body of response (unformatted, responses dont need html format, or attatchments)
-getPostLikes()
-	- returns array arr[0]=likes arr[1]=dislikes
+	- returns array of comments on the post, in time order (see mysql storage for returnable data)
 getUserData(int: userid)
-	- returns basic data about the user:
-		+ username
-		+ Name
-		+ Status
-		+ Path to Profile Picture
-		+ xp
-		+ Array of tag types
-			* arr[0] - Staff roles
-			* arr[1] - Donator Roles
-			* arr[2] - Given roles (helper, sexy, etc.)
-getProfileData(int: userid)
-	- returns all data about the specified user
-		+ username
-		+ Name
-		+ location
-		+ Discord ID
-		+ Steam ID
-		+ Origin ID
-		+ Minecraft Username
-		+ Status
-		+ Date Joined
-		+ Path to Profile Picture
-		+ Path to Banner
-		+ HTML format of profile home
-		+ xp
-		+ Array of tag types
-			* arr[0] - Staff roles
-			* arr[1] - Donator Roles
-			* arr[2] - Given roles (helper, sexy, etc.)
+	- returns all data about the user (see mysql storage)
