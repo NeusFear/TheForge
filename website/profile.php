@@ -40,7 +40,7 @@
       if (isset($_POST["usreid"])) {
         echo 'logged in as: ' . $_POST["userid"];
       } else {
-        echo 'Login Page";
+        include 'modules/login.php';
       }
     }
     ?>
