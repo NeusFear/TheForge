@@ -1,5 +1,8 @@
+<div class="content"><div class="contentheader"><img src="images/Icons/general/306-levels.png" style="width:28px;height:28px;"> <?php echo $_GET['user']?>'s Profile Page</div></div>
+
+<div class="content"><img alt="banner" src="BANNER" style="width:100%;height:10%;"></img></div>
+
 <div class="content">
-  <div class="contentheader"><img src="images/Icons/general/306-levels.png" style="width:28px;height:28px;"> <?php echo $_GET['user']?>'s Profile Page</div>
   <p>
     <div class="columns">
       <span>
