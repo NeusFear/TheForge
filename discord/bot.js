@@ -104,7 +104,7 @@ bot.on('message', message => {
       .setAuthor("The Forge", bot.user.avatarURL)
       .setColor(0xffc342)
       .setDescription("About TheForge:")
-      .addField("Who are we?", "TheForge started as a group of friends who liked to play games, simple enough. We had a vision to make a community of players that like dto play the same games as us so we dont have that one guy in the squad who dosent know what they're doing and has their VOP Volume all the way down.", true)
+      .addField("Who are we?", "TheForge started as a group of friends who liked to play games, simple enough. We had a vision to make a community of players that like to play the same games as us, so we dont have that one guy in the squad who dosent know what they're doing and has their VOP Volume all the way down.", true)
       .addField("What's our goal?", "We want to make it easy for gamers to find games they'll love. On top of the community on discord you can ask, you can also consult our website, where we have reviews by REAL gamers, who arent biased or partnered with a huge company.", true)
       .addField("How do I get Involved?", "Getting to be apart of the community is really easy here on TheForge, you can do anything from saying 'Hi' on the forums or on discord, or you could join a voice channel and squad up with some other members of the community.", true)
       .setFooter("Bot made with ❤ by SkyForge | Contact them for support.")
@@ -151,7 +151,7 @@ bot.on('message', message => {
         .addField("Rules:", "**1)** Use the channels for their specified topic, please...\n**2)** Don't spam our text channels, no one wants all those notifications...\n**3)** If you have WWIII going on in the background, don't join a Voice Channel.\n**4)** Keep the racial slurs to a minimum.")
         .addField("Channels:", "**#welcome** : This channel is for infomation... you're reading it now.\n**#announcements** : Find out what's new in the community.\n**#ideas** : Submit suggestions here\n**#random** : Used for, casual chat, dank memes, links, etc.")
         .addField("Other Channels:", "**#ark** : For our public Server\n**#minecraft** : For our custom *@Minecraft* (Currently in Development)")
-        .addField("Roles:", "**@Admin** - who manage the game serevrs, website, and forums\n**@Moderator** - keep those pesky trolls under their bridges\n**@Associate** - Sometimes we associate with them.\n**@<Game>** - People who play a game. (*duh*)")
+        .addField("Roles:", "**@Admin** - who manage the game servers, website, and forums\n**@Moderator** - keep those pesky trolls under their bridges\n**@Associate** - Sometimes we associate with them.\n**@<Game>** - People who play a game. (*duh*)")
         .addField("Website:", "*!website*")
         .addField("Our Dedicated Servers", "**Ark:** *theforgeark.com*\n**Minecraft:** *coming soon*")
 
