@@ -73,25 +73,25 @@ input.navbutton:hover{
   padding: 14px;
 }
 input[type=text] {
-    width: 100%;
+    width: 98%;
     padding: 6px;
-	border: none;
-	box-shadow: inset 0 0 1px #000000;
+	border: solid #e0e0e0 2px;
+	border-radius: 5px;
 }
 input[type=text]:focus {
     background-color: #faf9f5;
 }
 input[type=password] {
-    width: 100%;
+    width: 98%;
     padding: 6px;
-	border: none;
-	box-shadow: inset 0 0 1px #000000;
+	border: solid #e0e0e0 2px;
+	border-radius: 5px;
 }
 input[type=password]:focus {
     background-color: #faf9f5;
 }
 input[type=submit] {
-	width: 100%;
+	width: 99%;
 	border: none;
 	background-color: #ffc342;
 	padding: 8px;
@@ -108,10 +108,10 @@ input[type=submit]:hover {
 .card {
 	background-color:white;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	margin-left:5%;
-	margin-right:5%;
+	margin-left:16px;
+	margin-right:16px;
 	margin-top:50px;
-	padding: 16px;;
+	 padding: 16px 40px 16px 40px;
 }
 .card img {
 	margin-top: -50px;
