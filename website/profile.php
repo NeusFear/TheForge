@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8"></meta>
       <!--Tab Title-->
-    <title>TheForge - Forums</title>
+    <title>TheForge - Profile</title>
 
       <!--Meta-->
     <meta content="The Forge - Online Community" name="description"></meta>
@@ -30,6 +30,11 @@
       if (isset($_POST["usreid"])) {
         echo 'logged in as: ' . $_POST["userid"] . 'Viewing: ' . $_GET['user'] . "'s profile page.";
       } else {
+		include 'modules/header.html';
+		echo '<br>';
+		include 'modules/navbar.html';
+		echo '<br><br>';
+		include 'modules/profilehome.php';
         echo 'Not Loggen in, Viewing: ' . $_GET['user'] . "'s profile page.";
       }
     } else {
