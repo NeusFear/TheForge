@@ -1,0 +1,28 @@
+Inserting into a table:
+``
+// Quote and escape form submitted values
+$name = db_quote($_POST['username']);
+$email = db_quote($_POST['email']);
+
+// Insert the values into the database
+$result = db_query("INSERT INTO `users` (`name`,`email`) VALUES (" . $name . "," . $email . ")");
+``
+
+Querying:
+``
+// Connect to the database
+$connection = db_connect();
+
+// Query the database
+$result = mysqli_query($connection,$query);
+``
+
+Selecting specific rows:
+``
+$rows = db_select("SELECT `name`,`email` FROM `users` WHERE id=5");
+if($rows === false) {
+    $error = db_error();
+    // Handle error - inform administrator, log to file, show error page, etc.
+}
+``
+
